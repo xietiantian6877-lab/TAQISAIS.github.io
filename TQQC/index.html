@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025年福建省·球坦克·LP 中式台球城市精英联赛</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF', // 赛事主蓝色
+                        secondary: '#FF2E2E', // 赛事主红色
+                        dark: '#1D2939',
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-gradient-event {
+                background: linear-gradient(135deg, #165DFF 0%, #FF2E2E 100%);
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-dark">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="logo2-14.png" alt="球坦克 × LP" class="h-8 mr-2" />
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#schedule" class="text-gray-700 hover:text-primary transition-colors">赛事安排</a></li>
+    <li><a href="#scoreboard" class="text-gray-700 hover:text-primary transition-colors">选手积分</a></li> <!-- 新增按钮 -->
+    <li><a href="#finals" class="text-gray-700 hover:text-primary transition-colors">总决赛</a></li>
+    <li><a href="#contact" class="text-gray-700 hover:text-primary transition-colors">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 赛事头部区域 -->
+    <section
+  class="text-white py-16 md:py-24 relative overflow-hidden bg-center bg-cover"
+  style="background-image: url('TP001.png');"
+        <!-- 装饰元素 -->
+        <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-white/10"></div>
+        <div class="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-white/10"></div>
+        <div class="absolute top-1/2 left-1/3 w-16 h-16 rounded-full bg-white/10"></div>
+        
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="flex justify-center items-center mb-4">
+               <img src="logo-14.png" alt="品牌LOGO" class="h-10 mx-2" />
+           </div>
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-2 text-shadow">球坦克·LP球杆杯</h1>
+            <h2 class="text-[clamp(1.5rem,4vw,3rem)] font-bold mb-8 text-shadow">分福建省中式台球城市精英联赛</h2>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">九座城市</div>
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">九站连打</div>
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">角逐省冠</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl inline-block px-6 py-3 text-lg font-bold">
+                冠军奖金：50,000元
+            </div>
+        </div>
+    </section>
+
+    <!-- 赛事站点列表 -->
+    <section id="schedule" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-primary">赛事站点安排</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">九站赛事依次展开，覆盖福建核心城市，报名及参与详情如下</p>
+            </div>
+
+            <div class="space-y-8 max-w-5xl mx-auto">
+                <!-- 第一站 · 泉州站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第一站 · 泉州站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>晋江悦点台球俱乐部</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>10月10日-10月13日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：福建省泉州市晋江悦点台球俱乐部</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:14700065858" class="underline">14700065858</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二站 · 厦门站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第二站 · 厦门站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>厦门G11台球俱乐部</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>10月16日-10月19日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：厦门市思明区厦禾路国贸大厦旁富山大厦4楼G11台球俱乐部</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:18650159866" class="underline">18650159866</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第三站 · 漳州站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第三站 · 漳州站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>漳州进化+1台球俱乐部</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>10月22日-10月25日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：漳州龙文区湖滨路1号城投碧湖城市广场4幢D203号</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:17606060815" class="underline">17606060815</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第四站 · 龙岩站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第四站 · 龙岩站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>龙岩爱尚英伦台球俱乐部</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>10月28日-10月31日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：福建省龙岩市新罗区龙岩大道688号京华购物中心二楼</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:17304640888" class="underline">17304640888</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第五站 · 三明站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第五站 · 三明站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>永安璟点台球俱乐部</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>11月3日-11月6日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：福建省永安市燕南街道巴溪大道1855号</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:15160617333" class="underline">15160617333</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第六站 · 南平站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第六站 · 南平站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>武夷山聚玩台球俱乐部</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>11月9日-11月12日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：福建省南平市武夷山市五九中路38-2号</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:13706914666" class="underline">13706914666</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第七站 · 宁德站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第七站 · 宁德站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>宁德五星璟点台球俱乐部</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>11月15日-11月18日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：福建省宁德市蕉城区闽东中路联信财富广场5楼五星璟点台球俱乐部</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:19835569295" class="underline">19835569295</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第八站 · 福州站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第八站 · 福州站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>福州九度台球运动场</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>11月21日-11月24日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：福州市晋安区福新东路君临商业中心运动城</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:13055906147" class="underline">13055906147</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第九站 · 莆田站 -->
+                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 shadow-sm card-hover border-l-4 border-primary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">第九站 · 莆田站</h3>
+                            <p class="text-gray-600 mb-2"><i class="fa fa-map-marker mr-2"></i>莆田长城台球俱乐部</p>
+                            <p class="text-gray-600"><i class="fa fa-calendar mr-2"></i>11月27日-11月30日</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <p class="font-medium">地址：福建省莆田市城厢区新华书店对面石室路7号5层</p>
+                            <p class="text-secondary font-medium mt-2">报名通知：现场报名或联系 <a href="tel:05945555147" class="underline">0594-5555147</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 赛事亮点 -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-primary">赛事亮点</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white rounded-xl p-6 shadow-sm text-center card-hover">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-trophy text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">高额奖金</h3>
+                    <p class="text-gray-600">总决赛冠军奖金高达50,000元，各分站赛均设有丰厚奖金及奖品</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm text-center card-hover">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-map-marker text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">九城联动</h3>
+                    <p class="text-gray-600">覆盖福建省九个主要城市，让更多台球爱好者有机会参与其中</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm text-center card-hover">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-users text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">精英汇聚</h3>
+                    <p class="text-gray-600">汇聚各地台球精英，切磋技艺，共同提高福建台球运动水平</p>
+                </div>
+            </div>
+        </div>
+    </section>
+<section id="scoreboard" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-shadow">选手积分</h2>
+        <div id="excelTable" class="overflow-x-auto"></div>
+        <p class="mt-6 text-white/80">积分表自动读取 score.xlsx 文件，修改后刷新网页即可更新</p>
+    </div>
+</section>
+<section id="scoreboard" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-shadow">选手积分</h2>
+        <div id="excelTable" class="overflow-x-auto"></div>
+        <p class="mt-6 text-white/80">积分表自动读取 score.xlsx 文件，修改后刷新网页即可更新</p>
+    </div>
+</section>
+<script>
+fetch('/score')
+  .then(res => res.json())
+  .then(data => {
+    if (!data.length) {
+      document.getElementById('excelTable').innerHTML = '<p class="text-white/80">暂无积分数据</p>';
+      return;
+    }
+    // 处理合并表头
+    let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark">';
+    // 第一行：大表头
+    html += '<thead><tr>';
+    data[0].forEach((cell, idx) => {
+      if ([2,4,6,8,10].includes(idx)) return; // 跳过小表头位置
+      if ([3,5,7,9,11].includes(idx)) {
+        html += `<th colspan="2" class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${data[0][idx-1]}</th>`;
+      } else if (idx === 0 || idx === 1 || idx === 12) {
+        html += `<th rowspan="2" class="px-2 py-2 border-b font-bold text-center bg-dark text-white">${cell}</th>`;
+      }
+    });
+    html += '</tr><tr>';
+    // 第二行：小表头
+    data[1].forEach((cell, idx) => {
+      if (idx === 0 || idx === 1 || idx === 12) return;
+      html += `<th class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${cell}</th>`;
+    });
+    html += '</tr></thead><tbody>';
+    // 数据行
+    for(let i=2;i<data.length;i++){
+      html += '<tr' + (i % 2 ? ' class="bg-blue-50"' : '') + '>';
+      data[i].forEach((cell, idx) => {
+        html += `<td class="px-2 py-2 border-b text-center">${cell ?? 0}</td>`;
+      });
+      html += '</tr>';
+    }
+    html += '</tbody></table>';
+    document.getElementById('excelTable').innerHTML = html;
+  });
+</script>
+    <!-- 总决赛区域 -->
+    <section id="finals" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
+        <!-- 装饰元素 -->
+        <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/5"></div>
+        <div class="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-white/5"></div>
+        
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-shadow">福建省联赛总决赛</h2>
+            <p class="text-xl mb-8">12月20日 - 25日</p>
+            <div class="inline-block bg-white/20 backdrop-blur-sm rounded-xl px-8 py-6 mb-8 max-w-lg">
+                <h3 class="text-2xl font-bold mb-4">冠军奖金：50,000元</h3>
+                <p class="text-white/90 mb-4">总决赛将汇集各分站赛优胜者，角逐福建省总冠军荣誉及高额奖金</p>
+                <p class="text-white/90">总决赛具体地点将另行通知，敬请关注各站点赛事动态</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-6 mb-8">
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
+                    <p class="font-bold">亚军奖金</p>
+                    <p>20,000元</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
+                    <p class="font-bold">季军奖金</p>
+                    <p>10,000元</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
+                    <p class="font-bold">殿军奖金</p>
+                    <p>5,000元</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 opacity-80">
+                <div class="bg-white/10 px-3 py-1 rounded">CUETEC</div>
+                <div class="bg-white/10 px-3 py-1 rounded">LP</div>
+                <div class="bg-white/10 px-3 py-1 rounded">璟点</div>
+                <div class="bg-white/10 px-3 py-1 rounded">奥秘</div>
+                <div class="bg-white/10 px-3 py-1 rounded">星牌</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact" class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-xl font-bold mb-2">中式台球城市精英联赛</h3>
+                        <p class="text-gray-400">球坦克LP球杆杯官方赛事</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-weixin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-qq"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-8 text-center">
+                    <p class="mb-4">官方咨询：<a href="tel:13305052147" class="text-secondary font-medium">13305052147</a>（总决赛负责号）</p>
+                    <p class="text-gray-500 text-sm">© 2023 球坦克LP球杆杯·中式台球城市精英联赛 版权所有</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('py-2', 'shadow');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-2', 'shadow');
+            }
+        });
+    </script>
+</body>
+</html>
