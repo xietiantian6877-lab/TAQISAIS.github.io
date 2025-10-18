@@ -325,9 +325,9 @@
 <section id="scoreboard" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
     <div class="container mx-auto px-4 text-center relative z-10">
         <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-shadow">选手积分</h2>
-        <!-- 移除 overflow-x-auto，避免强制横向滚动 -->
-        <div id="excelTable" class="w-full"></div>
-        <p class="mt-6 text-white/80">积分表自动读取 score.xlsx 文件，修改后刷新网页即可更新</p>
+        <!-- 保留滑动容器，添加自定义类优化滚动体验 -->
+        <div id="excelTable" class="overflow-x-auto score-table-container"></div>
+        <p class="mt-6 text-white/80">注：此表格仅展示前100选手比赛积分</p>
     </div>
 </section>
 <script>
@@ -342,36 +342,44 @@ fetch('score.json')
       return;
     }
 
-    let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark">';
-    // 第一行：大表头（合并每个地区的2列）
+    // 表格整体缩小，总积分列（idx=20）固定右侧
+    let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark score-table">';
+    // 第一行：大表头（保留合并逻辑，总积分列固定）
     html += '<thead><tr>';
     data[0].forEach((cell, idx) => {
-      // 跳过每个地区的第2个占位列（如泉州站在idx=2，厦门站在idx=4...）
-      if ([2,4,6,8,10,12,14,16,18].includes(idx)) return;
-      // 每个地区的第2列（如泉州站idx=3）合并显示地区名
+      if ([2,4,6,8,10,12,14,16,18].includes(idx)) return; // 跳过占位列
+      
+      // 总积分列特殊样式：固定右侧+深色背景
+      const isTotalScore = idx === 20;
+      const thClass = isTotalScore 
+        ? 'sticky right-0 z-20 px-1.5 py-1.5 border-b font-bold text-center bg-dark text-white text-xs sm:text-sm'
+        : 'px-1.5 py-1.5 border-b font-bold text-center bg-primary text-white text-xs sm:text-sm';
+
       if ([3,5,7,9,11,13,15,17,19].includes(idx)) {
-        html += `<th colspan="2" class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${data[0][idx-1]}</th>`;
+        html += `<th colspan="2" class="${thClass}">${data[0][idx-1]}</th>`;
       } else if (idx === 0 || idx === 1 || idx === 20) {
-        // 排名、选手、总积分 跨2行显示
-        html += `<th rowspan="2" class="px-2 py-2 border-b font-bold text-center bg-dark text-white">${cell}</th>`;
+        html += `<th rowspan="2" class="${thClass}">${cell}</th>`;
       }
     });
     html += '</tr><tr>';
-    // 第二行：小表头（所有地区均显示“出场分”）
+    // 第二行：小表头（统一缩小内边距和字体）
     data[1].forEach((cell, idx) => {
-      // 跳过排名、选手、总积分的占位位置
       if (idx === 0 || idx === 1 || idx === 20) return;
-      html += `<th class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${cell}</th>`;
+      html += `<th class="px-1.5 py-1.5 border-b font-bold text-center bg-primary text-white text-xs sm:text-sm">${cell}</th>`;
     });
     html += '</tr></thead><tbody>';
 
-    // 数据行：显示前100名
+    // 数据行（前100名，总积分列固定）
     const maxRows = 100;
     const endIndex = Math.min(2 + maxRows, data.length);
     for (let i = 2; i < endIndex; i++) {
-      html += '<tr' + (i % 2 ? ' class="bg-blue-50"' : '') + '>';
+      html += '<tr' + (i % 2 ? ' class="bg-blue-50/30"' : '') + '>';
       data[i].forEach((cell, idx) => {
-        html += `<td class="px-2 py-2 border-b text-center">${cell ?? 0}</td>`;
+        const isTotalScore = idx === 20;
+        const tdClass = isTotalScore 
+          ? 'sticky right-0 z-20 px-1.5 py-1.5 border-b text-center font-medium bg-dark/90 text-white text-xs sm:text-sm'
+          : 'px-1.5 py-1.5 border-b text-center text-xs sm:text-sm';
+        html += `<td class="${tdClass}">${cell ?? 0}</td>`;
       });
       html += '</tr>';
     }
@@ -385,25 +393,41 @@ fetch('score.json')
   });
 </script>
 <style>
-/* 新增响应式样式，针对手机进一步优化 */
+/* 表格容器优化：滚动条美化+最小高度 */
+.score-table-container {
+  min-height: 320px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.4) transparent;
+}
+.score-table-container::-webkit-scrollbar {
+  height: 7px;
+}
+.score-table-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 4px;
+}
+
+/* 表格整体缩小：基础尺寸控制 */
+.score-table {
+  font-size: 12px;
+  transform-origin: left center; /* 缩放原点靠左，避免右侧偏移 */
+}
+
+/* 移动端进一步缩小+固定列强调 */
 @media (max-width: 768px) {
-  #excelTable table {
-    font-size: 12px; /* 进一步缩小移动端字体 */
+  .score-table {
+    transform: scale(0.92); /* 手机端整体缩小8%，减少滑动需求 */
   }
-  
-  #excelTable th,
-  #excelTable td {
-    padding: 4px 2px !important; /* 最小化内边距 */
+  .score-table th,
+  .score-table td {
+    padding: 3px 4px !important; /* 最小化内边距，紧凑显示 */
     white-space: nowrap; /* 防止内容换行导致高度增加 */
   }
-
-  /* 若仍有溢出，可隐藏次要列（按需取消注释） */
-  /*
-  #excelTable th:nth-child(6),
-  #excelTable td:nth-child(6) {
-    display: none;
+  /* 总积分列添加阴影，区分滚动内容 */
+  .score-table td:nth-child(21),
+  .score-table th:nth-child(21) {
+    box-shadow: -2px 0 6px rgba(0,0,0,0.15);
   }
-  */
 }
 </style>
     <!-- 总决赛区域 -->
