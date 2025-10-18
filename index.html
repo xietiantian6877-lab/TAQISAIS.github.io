@@ -331,46 +331,57 @@
     </div>
 </section>
 <script>
-fetch('/score')
-  .then(res => res.json())
+fetch('/score.json')
+  .then(res => {
+    if (!res.ok) throw new Error('数据加载失败');
+    return res.json();
+  })
   .then(data => {
     if (!data.length) {
       document.getElementById('excelTable').innerHTML = '<p class="text-white/80">暂无积分数据</p>';
       return;
     }
-    
-    // 处理合并表头，优化单元格内边距和字体大小
-    let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark w-full">';
-    // 第一行：大表头
+
+    let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark">';
+    // 第一行：大表头（合并每个地区的2列）
     html += '<thead><tr>';
     data[0].forEach((cell, idx) => {
-      if ([2,4,6,8,10].includes(idx)) return; // 跳过小表头位置
-
-      if ([3,5,7,9,11].includes(idx)) {
-        // 响应式内边距和字体：移动端更小，平板及以上正常
-        html += `<th colspan="2" class="px-1 py-1 sm:px-2 sm:py-2 border-b font-bold text-center bg-primary text-white text-xs sm:text-sm">${data[0][idx-1]}</th>`;
-      } else if (idx === 0 || idx === 1 || idx === 12) {
-        html += `<th rowspan="2" class="px-1 py-1 sm:px-2 sm:py-2 border-b font-bold text-center bg-dark text-white text-xs sm:text-sm">${cell}</th>`;
+      // 跳过每个地区的第2个占位列（如泉州站在idx=2，厦门站在idx=4...）
+      if ([2,4,6,8,10,12,14,16,18].includes(idx)) return;
+      // 每个地区的第2列（如泉州站idx=3）合并显示地区名
+      if ([3,5,7,9,11,13,15,17,19].includes(idx)) {
+        html += `<th colspan="2" class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${data[0][idx-1]}</th>`;
+      } else if (idx === 0 || idx === 1 || idx === 20) {
+        // 排名、选手、总积分 跨2行显示
+        html += `<th rowspan="2" class="px-2 py-2 border-b font-bold text-center bg-dark text-white">${cell}</th>`;
       }
     });
     html += '</tr><tr>';
-    // 第二行：小表头
+    // 第二行：小表头（所有地区均显示“出场分”）
     data[1].forEach((cell, idx) => {
-      if (idx === 0 || idx === 1 || idx === 12) return;
-      html += `<th class="px-1 py-1 sm:px-2 sm:py-2 border-b font-bold text-center bg-primary text-white text-xs sm:text-sm">${cell}</th>`;
+      // 跳过排名、选手、总积分的占位位置
+      if (idx === 0 || idx === 1 || idx === 20) return;
+      html += `<th class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${cell}</th>`;
     });
     html += '</tr></thead><tbody>';
-    // 数据行
-    for(let i=2;i<data.length;i++){
+
+    // 数据行：显示前100名
+    const maxRows = 100;
+    const endIndex = Math.min(2 + maxRows, data.length);
+    for (let i = 2; i < endIndex; i++) {
       html += '<tr' + (i % 2 ? ' class="bg-blue-50"' : '') + '>';
       data[i].forEach((cell, idx) => {
-        // 缩小单元格内边距和字体，适配移动端
-        html += `<td class="px-1 py-1 sm:px-2 sm:py-2 border-b text-center text-xs sm:text-sm">${cell ?? 0}</td>`;
+        html += `<td class="px-2 py-2 border-b text-center">${cell ?? 0}</td>`;
       });
       html += '</tr>';
     }
+
     html += '</tbody></table>';
     document.getElementById('excelTable').innerHTML = html;
+  })
+  .catch(err => {
+    console.error('加载错误：', err);
+    document.getElementById('excelTable').innerHTML = '<p class="text-white/80">数据加载失败，请检查文件</p>';
   });
 </script>
 <style>
