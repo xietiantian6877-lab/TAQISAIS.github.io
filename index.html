@@ -262,17 +262,22 @@
     <div class="container mx-auto px-4 text-center relative z-10">
         <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-shadow">选手积分</h2>
         <div id="excelTable" class="overflow-x-auto"></div>
-        <p class="mt-6 text-white/80">积分排行榜更新中</p>
+        <p class="mt-6 text-white/80">积分排行目前积分排行前100选手
+        </p>
     </div>
 </section>
 <script>
-fetch('/score.json')  // 改为请求静态JSON文件
-  .then(res => res.json())
+fetch('/score.json')  // 确保路径已改为json文件（之前的关键修改）
+  .then(res => {
+    if (!res.ok) throw new Error('数据加载失败');
+    return res.json();
+  })
   .then(data => {
     if (!data.length) {
       document.getElementById('excelTable').innerHTML = '<p class="text-white/80">暂无积分数据</p>';
       return;
     }
+
     // 处理合并表头
     let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark">';
     // 第一行：大表头
@@ -292,16 +297,25 @@ fetch('/score.json')  // 改为请求静态JSON文件
       html += `<th class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${cell}</th>`;
     });
     html += '</tr></thead><tbody>';
-    // 数据行
-    for(let i=2;i<data.length;i++){
+
+    // 数据行：只显示前100名（从第2行开始，最多循环100次）
+    const maxRows = 100; // 最多显示100行数据
+    // 计算实际需要循环的次数（取数据总长度和2+100中的较小值，避免超出数据范围）
+    const endIndex = Math.min(2 + maxRows, data.length);
+    for (let i = 2; i < endIndex; i++) { // 从第2行数据开始，到endIndex结束
       html += '<tr' + (i % 2 ? ' class="bg-blue-50"' : '') + '>';
       data[i].forEach((cell, idx) => {
         html += `<td class="px-2 py-2 border-b text-center">${cell ?? 0}</td>`;
       });
       html += '</tr>';
     }
+
     html += '</tbody></table>';
     document.getElementById('excelTable').innerHTML = html;
+  })
+  .catch(err => {
+    console.error('加载错误：', err);
+    document.getElementById('excelTable').innerHTML = '<p class="text-white/80">数据加载失败，请检查文件</p>';
   });
 </script>
     <!-- 总决赛区域 -->
