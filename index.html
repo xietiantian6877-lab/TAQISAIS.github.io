@@ -325,8 +325,8 @@
 <section id="scoreboard" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
     <div class="container mx-auto px-4 text-center relative z-10">
         <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-shadow">选手积分</h2>
-        <!-- 保留滑动容器，添加自定义类优化滚动体验 -->
-        <div id="excelTable" class="overflow-x-auto score-table-container"></div>
+        <!-- 滚动容器：仅承载固定宽度的表格，超出部分滑动 -->
+        <div id="excelTable" class="overflow-x-auto score-table-container" style="width: 100%;"></div>
         <p class="mt-6 text-white/80">注：此表格仅展示前100选手比赛积分</p>
     </div>
 </section>
@@ -342,44 +342,47 @@ fetch('score.json')
       return;
     }
 
-    // 表格整体缩小，总积分列（idx=20）固定右侧
-    let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark score-table">';
-    // 第一行：大表头（保留合并逻辑，总积分列固定）
+    // 关键：表格整体宽度固定为1200px（根据列数计算，确保所有内容正常显示）
+    let html = '<table class="bg-white/10 rounded-xl shadow text-dark score-table" style="width: 1200px; border-collapse: collapse;">';
+    // 1. 表头行（总积分列固定，表格宽度不变）
     html += '<thead><tr>';
     data[0].forEach((cell, idx) => {
       if ([2,4,6,8,10,12,14,16,18].includes(idx)) return; // 跳过占位列
-      
-      // 总积分列特殊样式：固定右侧+深色背景
+
       const isTotalScore = idx === 20;
-      const thClass = isTotalScore 
-        ? 'sticky right-0 z-20 px-1.5 py-1.5 border-b font-bold text-center bg-dark text-white text-xs sm:text-sm'
-        : 'px-1.5 py-1.5 border-b font-bold text-center bg-primary text-white text-xs sm:text-sm';
+      // 总积分列：固定右侧+固定宽度，不随表格滚动
+      const thStyle = isTotalScore 
+        ? 'position: sticky; right: 0; z-index: 30; width: 80px; background: #1D2939; color: white;' 
+        : 'background: #165DFF; color: white;';
 
       if ([3,5,7,9,11,13,15,17,19].includes(idx)) {
-        html += `<th colspan="2" class="${thClass}">${data[0][idx-1]}</th>`;
+        html += `<th colspan="2" style="${thStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${data[0][idx-1]}</th>`;
       } else if (idx === 0 || idx === 1 || idx === 20) {
-        html += `<th rowspan="2" class="${thClass}">${cell}</th>`;
+        html += `<th rowspan="2" style="${thStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell}</th>`;
       }
     });
     html += '</tr><tr>';
-    // 第二行：小表头（统一缩小内边距和字体）
+    // 2. 子表头行
     data[1].forEach((cell, idx) => {
       if (idx === 0 || idx === 1 || idx === 20) return;
-      html += `<th class="px-1.5 py-1.5 border-b font-bold text-center bg-primary text-white text-xs sm:text-sm">${cell}</th>`;
+      html += `<th style="background: #165DFF; color: white; padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell}</th>`;
     });
     html += '</tr></thead><tbody>';
 
-    // 数据行（前100名，总积分列固定）
+    // 3. 数据行（表格宽度固定，总积分列不动）
     const maxRows = 100;
     const endIndex = Math.min(2 + maxRows, data.length);
     for (let i = 2; i < endIndex; i++) {
-      html += '<tr' + (i % 2 ? ' class="bg-blue-50/30"' : '') + '>';
+      const rowBg = i % 2 ? 'background: rgba(219, 234, 254, 0.3);' : 'background: white;';
+      html += `<tr style="${rowBg}">`;
       data[i].forEach((cell, idx) => {
         const isTotalScore = idx === 20;
-        const tdClass = isTotalScore 
-          ? 'sticky right-0 z-20 px-1.5 py-1.5 border-b text-center font-medium bg-dark/90 text-white text-xs sm:text-sm'
-          : 'px-1.5 py-1.5 border-b text-center text-xs sm:text-sm';
-        html += `<td class="${tdClass}">${cell ?? 0}</td>`;
+        // 总积分列：固定右侧，与固定宽度的表格适配
+        const tdStyle = isTotalScore 
+          ? 'position: sticky; right: 0; z-index: 20; width: 80px; background: rgba(29, 41, 57, 0.9); color: white; font-weight: 500;' 
+          : 'color: #1D2939;';
+
+        html += `<td style="${tdStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell ?? 0}</td>`;
       });
       html += '</tr>';
     }
@@ -393,12 +396,15 @@ fetch('score.json')
   });
 </script>
 <style>
-/* 表格容器优化：滚动条美化+最小高度 */
+/* 滚动容器：宽度100%适配屏幕，仅承载固定宽度的表格 */
 .score-table-container {
   min-height: 320px;
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.4) transparent;
+  margin: 0;
+  padding: 0;
 }
+/* 滚动条美化 */
 .score-table-container::-webkit-scrollbar {
   height: 7px;
 }
@@ -407,26 +413,25 @@ fetch('score.json')
   border-radius: 4px;
 }
 
-/* 表格整体缩小：基础尺寸控制 */
+/* 表格：强制固定宽度，不随任何因素拉伸压缩 */
 .score-table {
-  font-size: 12px;
-  transform-origin: left center; /* 缩放原点靠左，避免右侧偏移 */
+  width: 1200px !important; /* 固定宽度（可根据实际列数微调，如1100px/1300px） */
+  transform: none !important; /* 彻底禁用缩放，确保宽度稳定 */
+  margin: 0 auto !important; /* 表格在容器中居中，宽度不变 */
 }
 
-/* 移动端进一步缩小+固定列强调 */
+/* 手机端：确保固定宽度表格可正常滑动，总积分列贴右 */
 @media (max-width: 768px) {
-  .score-table {
-    transform: scale(0.92); /* 手机端整体缩小8%，减少滑动需求 */
-  }
-  .score-table th,
-  .score-table td {
-    padding: 3px 4px !important; /* 最小化内边距，紧凑显示 */
-    white-space: nowrap; /* 防止内容换行导致高度增加 */
-  }
-  /* 总积分列添加阴影，区分滚动内容 */
-  .score-table td:nth-child(21),
-  .score-table th:nth-child(21) {
+  .score-table th:nth-child(21),
+  .score-table td:nth-child(21) {
+    right: 0 !important; /* 强制总积分列固定在屏幕右侧 */
     box-shadow: -2px 0 6px rgba(0,0,0,0.15);
+  }
+  /* 其他列保持紧凑，适配固定宽度表格 */
+  .score-table th:not(:nth-child(21)),
+  .score-table td:not(:nth-child(21)) {
+    padding: 6px 3px !important;
+    font-size: 11px !important;
   }
 }
 </style>
