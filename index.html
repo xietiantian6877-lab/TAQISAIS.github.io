@@ -267,7 +267,7 @@
     </div>
 </section>
 <script>
-fetch('/score.json')  // 确保路径已改为json文件（之前的关键修改）
+fetch('/score.json')
   .then(res => {
     if (!res.ok) throw new Error('数据加载失败');
     return res.json();
@@ -278,31 +278,33 @@ fetch('/score.json')  // 确保路径已改为json文件（之前的关键修改
       return;
     }
 
-    // 处理合并表头
     let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark">';
-    // 第一行：大表头
+    // 第一行：大表头（合并每个地区的2列）
     html += '<thead><tr>';
     data[0].forEach((cell, idx) => {
-      if ([2,4,6,8,10].includes(idx)) return; // 跳过小表头位置
-      if ([3,5,7,9,11].includes(idx)) {
+      // 跳过每个地区的第2个占位列（如泉州站在idx=2，厦门站在idx=4...）
+      if ([2,4,6,8,10,12,14,16,18].includes(idx)) return;
+      // 每个地区的第2列（如泉州站idx=3）合并显示地区名
+      if ([3,5,7,9,11,13,15,17,19].includes(idx)) {
         html += `<th colspan="2" class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${data[0][idx-1]}</th>`;
-      } else if (idx === 0 || idx === 1 || idx === 12) {
+      } else if (idx === 0 || idx === 1 || idx === 20) {
+        // 排名、选手、总积分 跨2行显示
         html += `<th rowspan="2" class="px-2 py-2 border-b font-bold text-center bg-dark text-white">${cell}</th>`;
       }
     });
     html += '</tr><tr>';
-    // 第二行：小表头
+    // 第二行：小表头（所有地区均显示“出场分”）
     data[1].forEach((cell, idx) => {
-      if (idx === 0 || idx === 1 || idx === 12) return;
+      // 跳过排名、选手、总积分的占位位置
+      if (idx === 0 || idx === 1 || idx === 20) return;
       html += `<th class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${cell}</th>`;
     });
     html += '</tr></thead><tbody>';
 
-    // 数据行：只显示前100名（从第2行开始，最多循环100次）
-    const maxRows = 100; // 最多显示100行数据
-    // 计算实际需要循环的次数（取数据总长度和2+100中的较小值，避免超出数据范围）
+    // 数据行：显示前100名
+    const maxRows = 100;
     const endIndex = Math.min(2 + maxRows, data.length);
-    for (let i = 2; i < endIndex; i++) { // 从第2行数据开始，到endIndex结束
+    for (let i = 2; i < endIndex; i++) {
       html += '<tr' + (i % 2 ? ' class="bg-blue-50"' : '') + '>';
       data[i].forEach((cell, idx) => {
         html += `<td class="px-2 py-2 border-b text-center">${cell ?? 0}</td>`;
