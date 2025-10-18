@@ -325,65 +325,76 @@
 <section id="scoreboard" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
     <div class="container mx-auto px-4 text-center relative z-10">
         <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-shadow">选手积分</h2>
-        <div id="excelTable" class="overflow-x-auto"></div>
-        <p class="mt-6 text-white/80">积分排行目前积分排行前100选手
-        </p>
+        <!-- 移除 overflow-x-auto，避免强制横向滚动 -->
+        <div id="excelTable" class="w-full"></div>
+        <p class="mt-6 text-white/80">积分表自动读取 score.xlsx 文件，修改后刷新网页即可更新</p>
     </div>
 </section>
 <script>
-fetch('score.json')
-  .then(res => {
-    if (!res.ok) throw new Error('数据加载失败');
-    return res.json();
-  })
+fetch('/score')
+  .then(res => res.json())
   .then(data => {
     if (!data.length) {
       document.getElementById('excelTable').innerHTML = '<p class="text-white/80">暂无积分数据</p>';
       return;
     }
-
-    let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark">';
-    // 第一行：大表头（合并每个地区的2列）
+    
+    // 处理合并表头，优化单元格内边距和字体大小
+    let html = '<table class="min-w-full bg-white/10 rounded-xl shadow text-dark w-full">';
+    // 第一行：大表头
     html += '<thead><tr>';
     data[0].forEach((cell, idx) => {
-      // 跳过每个地区的第2个占位列（如泉州站在idx=2，厦门站在idx=4...）
-      if ([2,4,6,8,10,12,14,16,18].includes(idx)) return;
-      // 每个地区的第2列（如泉州站idx=3）合并显示地区名
-      if ([3,5,7,9,11,13,15,17,19].includes(idx)) {
-        html += `<th colspan="2" class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${data[0][idx-1]}</th>`;
-      } else if (idx === 0 || idx === 1 || idx === 20) {
-        // 排名、选手、总积分 跨2行显示
-        html += `<th rowspan="2" class="px-2 py-2 border-b font-bold text-center bg-dark text-white">${cell}</th>`;
+      if ([2,4,6,8,10].includes(idx)) return; // 跳过小表头位置
+
+      if ([3,5,7,9,11].includes(idx)) {
+        // 响应式内边距和字体：移动端更小，平板及以上正常
+        html += `<th colspan="2" class="px-1 py-1 sm:px-2 sm:py-2 border-b font-bold text-center bg-primary text-white text-xs sm:text-sm">${data[0][idx-1]}</th>`;
+      } else if (idx === 0 || idx === 1 || idx === 12) {
+        html += `<th rowspan="2" class="px-1 py-1 sm:px-2 sm:py-2 border-b font-bold text-center bg-dark text-white text-xs sm:text-sm">${cell}</th>`;
       }
     });
     html += '</tr><tr>';
-    // 第二行：小表头（所有地区均显示“出场分”）
+    // 第二行：小表头
     data[1].forEach((cell, idx) => {
-      // 跳过排名、选手、总积分的占位位置
-      if (idx === 0 || idx === 1 || idx === 20) return;
-      html += `<th class="px-2 py-2 border-b font-bold text-center bg-primary text-white">${cell}</th>`;
+      if (idx === 0 || idx === 1 || idx === 12) return;
+      html += `<th class="px-1 py-1 sm:px-2 sm:py-2 border-b font-bold text-center bg-primary text-white text-xs sm:text-sm">${cell}</th>`;
     });
     html += '</tr></thead><tbody>';
-
-    // 数据行：显示前100名
-    const maxRows = 100;
-    const endIndex = Math.min(2 + maxRows, data.length);
-    for (let i = 2; i < endIndex; i++) {
+    // 数据行
+    for(let i=2;i<data.length;i++){
       html += '<tr' + (i % 2 ? ' class="bg-blue-50"' : '') + '>';
       data[i].forEach((cell, idx) => {
-        html += `<td class="px-2 py-2 border-b text-center">${cell ?? 0}</td>`;
+        // 缩小单元格内边距和字体，适配移动端
+        html += `<td class="px-1 py-1 sm:px-2 sm:py-2 border-b text-center text-xs sm:text-sm">${cell ?? 0}</td>`;
       });
       html += '</tr>';
     }
-
     html += '</tbody></table>';
     document.getElementById('excelTable').innerHTML = html;
-  })
-  .catch(err => {
-    console.error('加载错误：', err);
-    document.getElementById('excelTable').innerHTML = '<p class="text-white/80">数据加载失败，请检查文件</p>';
   });
 </script>
+<style>
+/* 新增响应式样式，针对手机进一步优化 */
+@media (max-width: 768px) {
+  #excelTable table {
+    font-size: 12px; /* 进一步缩小移动端字体 */
+  }
+  
+  #excelTable th,
+  #excelTable td {
+    padding: 4px 2px !important; /* 最小化内边距 */
+    white-space: nowrap; /* 防止内容换行导致高度增加 */
+  }
+
+  /* 若仍有溢出，可隐藏次要列（按需取消注释） */
+  /*
+  #excelTable th:nth-child(6),
+  #excelTable td:nth-child(6) {
+    display: none;
+  }
+  */
+}
+</style>
     <!-- 总决赛区域 -->
     <section id="finals" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
         <!-- 装饰元素 -->
