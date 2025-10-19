@@ -72,7 +72,92 @@
         </div>
     </div>
 </header>
-
+<!-- 导航栏下方的横向滑动区域 -->
+<div class="bg-white border-b shadow-sm">
+  <!-- 外层容器：控制高度与导航栏一致，开启横向滚动 -->
+  <div class="relative h-16 md:h-20 overflow-x-auto scrollbar-hide">
+    <!-- 内层flex容器：容纳所有站点按钮，确保横向排列 -->
+    <div class="flex h-full px-4 space-x-4 absolute top-0 left-0">
+      <!-- 站点1：泉州站 -->
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第一站</span>
+          <p class="text-sm md:text-base font-medium">泉州</p>
+          <span class="text-xs md:text-sm text-gray-600">10月10日-13日</span>
+        </div>
+      </div>
+      
+      <!-- 站点2：厦门站 -->
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第二站</span>
+          <p class="text-sm md:text-base font-medium">厦门</p>
+          <span class="text-xs md:text-sm text-gray-600">10月16日-19日</span>
+        </div>
+      </div>
+      
+      <!-- 站点3：漳州站 -->
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第三站</span>
+          <p class="text-sm md:text-base font-medium">漳州</p>
+          <span class="text-xs md:text-sm text-gray-600">10月22日-25日</span>
+        </div>
+      </div>
+      
+      <!-- 站点4：龙岩站 -->
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第四站</span>
+          <p class="text-sm md:text-base font-medium">龙岩</p>
+          <span class="text-xs md:text-sm text-gray-600">10月28日-31日</span>
+        </div>
+      </div>
+      
+      <!-- 站点5：三明站 -->
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第五站</span>
+          <p class="text-sm md:text-base font-medium">三明</p>
+          <span class="text-xs md:text-sm text-gray-600">11月3日-6日</span>
+        </div>
+      </div>
+      
+      <!-- 剩余站点按相同格式添加 -->
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第六站</span>
+          <p class="text-sm md:text-base font-medium">南平</p>
+          <span class="text-xs md:text-sm text-gray-600">11月9日-12日</span>
+        </div>
+      </div>
+      
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第七站</span>
+          <p class="text-sm md:text-base font-medium">宁德</p>
+          <span class="text-xs md:text-sm text-gray-600">11月15日-18日</span>
+        </div>
+      </div>
+      
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第八站</span>
+          <p class="text-sm md:text-base font-medium">福州</p>
+          <span class="text-xs md:text-sm text-gray-600">11月21日-24日</span>
+        </div>
+      </div>
+      
+      <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+        <div class="text-center">
+          <span class="text-xs md:text-sm text-gray-500">第九站</span>
+          <p class="text-sm md:text-base font-medium">莆田</p>
+          <span class="text-xs md:text-sm text-gray-600">11月27日-30日</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
     // 移动端菜单切换
     document.getElementById('menuBtn').addEventListener('click', function() {
