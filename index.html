@@ -84,8 +84,8 @@
             向右滑动浏览赛事进度 >>
         </div>
 
-        <!-- 站点行（始终显示） -->
-        <div class="bg-white border-b shadow-sm relative z-10">
+        <!-- 站点行（菜单展开时隐藏，关闭时显示） -->
+        <div id="siteNav" class="bg-white border-b shadow-sm relative z-10">
             <div class="relative h-16 md:h-20 overflow-x-auto">
                 <style>
                     .relative::-webkit-scrollbar { display: none; }
@@ -173,61 +173,67 @@
         </div>
     </div>
 
-    <!-- 核心功能JS（新增提示文字显示控制） -->
+    <!-- 核心功能JS（保留所有效果） -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuBtn = document.getElementById('menuBtn');
             const mobileMenu = document.getElementById('mobileMenu');
             const mainNav = document.getElementById('mainNav');
             const stickyContainer = document.getElementById('stickyContainer');
-            const slideTip = document.getElementById('slideTip'); // 提示文字元素
+            const slideTip = document.getElementById('slideTip'); // 提示文字
+            const siteNav = document.getElementById('siteNav'); // 站点导航栏
             let lastScrollTop = 0;
             let isMenuOpen = false;
 
-            // 1. 移动端菜单切换
+            // 1. 移动端菜单切换（同步控制站点行和提示文字）
             menuBtn.addEventListener('click', function() {
                 isMenuOpen = !isMenuOpen;
                 mobileMenu.classList.toggle('hidden');
+                
                 if (isMenuOpen) {
+                    // 菜单展开：显示导航栏、隐藏站点行和提示文字
                     mainNav.classList.remove('nav-hidden');
-                    slideTip.classList.add('hidden'); // 菜单展开时隐藏提示
+                    siteNav.classList.add('hidden');
+                    slideTip.classList.add('hidden');
                     stickyContainer.classList.add('shadow-md');
                 } else {
-                    // 菜单关闭后，根据导航栏状态控制提示显示
+                    // 菜单关闭：恢复站点行，根据导航栏状态显示提示文字
+                    siteNav.classList.remove('hidden');
                     toggleSlideTip();
                 }
             });
 
-            // 2. 滚动方向判断 + 提示文字显示控制
+            // 2. 滚动逻辑（保留导航栏上移效果和提示文字显示）
             window.addEventListener('scroll', function() {
                 const currentScrollTop = window.scrollY;
 
-                if (isMenuOpen) return; // 菜单展开时不处理
+                if (isMenuOpen) return; // 菜单展开时不处理滚动逻辑
 
-                // 导航栏隐藏/显示逻辑
+                // 导航栏上移/显示
                 if (currentScrollTop > lastScrollTop && currentScrollTop > 100) {
-                    mainNav.classList.add('nav-hidden');
+                    mainNav.classList.add('nav-hidden'); // 导航栏上移隐藏
                     stickyContainer.classList.add('shadow-md');
                 } else {
-                    mainNav.classList.remove('nav-hidden');
+                    mainNav.classList.remove('nav-hidden'); // 导航栏恢复显示
                     if (currentScrollTop <= 50) {
                         stickyContainer.classList.remove('shadow-md');
                     }
                 }
 
-                // 控制提示文字显示/隐藏
+                // 控制提示文字：导航栏隐藏且菜单关闭时显示
                 toggleSlideTip();
 
                 lastScrollTop = currentScrollTop < 0 ? 0 : currentScrollTop;
             });
 
-            // 3. 平滑滚动
+            // 3. 平滑滚动（关闭菜单时恢复站点行）
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (isMenuOpen) {
                         isMenuOpen = false;
                         mobileMenu.classList.add('hidden');
+                        siteNav.classList.remove('hidden'); // 关闭菜单时恢复站点行
                     }
 
                     const targetId = this.getAttribute('href');
@@ -244,12 +250,13 @@
                 });
             });
 
-            // 辅助函数：根据导航栏状态切换提示文字显示
+            // 辅助函数：根据导航栏状态切换提示文字
             function toggleSlideTip() {
+                // 导航栏隐藏且菜单未展开 → 显示提示文字
                 if (mainNav.classList.contains('nav-hidden') && !isMenuOpen) {
-                    slideTip.classList.remove('hidden'); // 导航栏隐藏且菜单关闭 → 显示提示
+                    slideTip.classList.remove('hidden');
                 } else {
-                    slideTip.classList.add('hidden'); // 否则隐藏提示
+                    slideTip.classList.add('hidden');
                 }
             }
         });
@@ -334,7 +341,6 @@
                 </div>
 
                 <!-- 其他站点省略（保持原有结构） -->
-                <!-- 龙岩站、三明站、南平站、宁德站、福州站、莆田站 -->
             </div>
         </div>
     </section>
