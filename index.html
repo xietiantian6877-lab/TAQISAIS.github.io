@@ -36,7 +36,8 @@
 <body class="bg-gray-50 font-sans text-dark">
     <!-- 导航栏 -->
    <!-- 导航栏 -->
-<header class="sticky top-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-sm">
+<!-- 导航栏（纯白色背景） -->
+<header class="sticky top-0 z-50 transition-all duration-300 bg-white shadow-sm">
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between h-16 md:h-20">
             <!-- 品牌标识 -->
@@ -59,7 +60,7 @@
         </div>
     </div>
 
-    <!-- 移动端导航菜单 -->
+    <!-- 移动端导航菜单（保持白色背景） -->
     <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
         <div class="container mx-auto px-4 py-3 space-y-1">
             <a href="#schedule" class="block px-4 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary">赛事安排</a>
@@ -72,10 +73,22 @@
         </div>
     </div>
 </header>
-<!-- 导航栏下方的横向滑动区域 -->
 <div class="bg-white border-b shadow-sm">
-  <!-- 外层容器：控制高度与导航栏一致，开启横向滚动 -->
-  <div class="relative h-16 md:h-20 overflow-x-auto scrollbar-hide">
+  <!-- 外层容器：控制高度与导航栏一致，开启横向滚动（隐藏滚动条） -->
+  <div class="relative h-16 md:h-20 overflow-x-auto">
+    <!-- 关键：全浏览器隐藏滚动条的CSS -->
+    <style>
+      /* 隐藏Chrome、Safari等WebKit内核浏览器的滚动条 */
+      .relative::-webkit-scrollbar {
+        display: none; /* 不显示滚动条 */
+      }
+      /* 隐藏Firefox浏览器的滚动条 */
+      .relative {
+        -ms-overflow-style: none; /* IE/Edge隐藏滚动条 */
+        scrollbar-width: none; /* Firefox隐藏滚动条 */
+      }
+    </style>
+
     <!-- 内层flex容器：容纳所有站点按钮，确保横向排列 -->
     <div class="flex h-full px-4 space-x-4 absolute top-0 left-0">
       <!-- 站点1：泉州站 -->
@@ -123,7 +136,7 @@
         </div>
       </div>
       
-      <!-- 剩余站点按相同格式添加 -->
+      <!-- 站点6：南平站 -->
       <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
         <div class="text-center">
           <span class="text-xs md:text-sm text-gray-500">第六站</span>
@@ -132,6 +145,7 @@
         </div>
       </div>
       
+      <!-- 站点7：宁德站 -->
       <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
         <div class="text-center">
           <span class="text-xs md:text-sm text-gray-500">第七站</span>
@@ -140,6 +154,7 @@
         </div>
       </div>
       
+      <!-- 站点8：福州站 -->
       <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
         <div class="text-center">
           <span class="text-xs md:text-sm text-gray-500">第八站</span>
@@ -148,6 +163,7 @@
         </div>
       </div>
       
+      <!-- 站点9：莆田站 -->
       <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
         <div class="text-center">
           <span class="text-xs md:text-sm text-gray-500">第九站</span>
@@ -198,33 +214,32 @@
         });
     });
 </script>
-
     <!-- 赛事头部区域 -->
-    <section
-  class="text-white py-16 md:py-24 relative overflow-hidden bg-center bg-cover"
-  style="background-image: url('TP001.png');"
-        <!-- 装饰元素 -->
-        <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-white/10"></div>
-        <div class="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-white/10"></div>
-        <div class="absolute top-1/2 left-1/3 w-16 h-16 rounded-full bg-white/10"></div>
-        
-        <div class="container mx-auto px-4 text-center relative z-10">
-            <div class="flex flex-col justify-center items-center mb-4">
-               <img src="logo-14外发光.png" alt="品牌LOGO" class="h-10 mx-2" />
-           </div>
-            <img src="球杆杯.png" alt="小标题" class="block mx-auto my-18 h-16 md:h-28" />
-            <img src="标题.png" alt="标题" class="block mx-auto my-2 h-0 md:h-0"/>
-            <h2 class="text-[clamp(1.5rem,4vw,3rem)] font-bold mb-8 text-shadow">福建省中式台球城市精英联赛</h2>
-            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
-                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">九座城市</div>
-                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">九站连打</div>
-                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">角逐省冠</div>
-            </div>
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl inline-block px-6 py-3 text-lg font-bold">
-                冠军奖金：50,000元
-            </div>
-        </div>
-    </section>
+   <section
+      class="text-white py-16 md:py-24 relative overflow-hidden bg-center bg-cover"
+       style="background-image: url('TP001.png');">
+  <!-- 装饰元素 -->
+  <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-white/10"></div>
+  <div class="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-white/10"></div>
+  <div class="absolute top-1/2 left-1/3 w-16 h-16 rounded-full bg-white/10"></div>
+  
+  <div class="container mx-auto px-4 text-center relative z-10">
+    <div class="flex flex-col justify-center items-center mb-4">
+       <img src="logo-14外发光.png" alt="品牌LOGO" class="h-10 mx-2" />
+    </div>
+    <img src="球杆杯.png" alt="小标题" class="block mx-auto my-18 h-16 md:h-28" />
+    <img src="标题.png" alt="标题" class="block mx-auto my-2 h-0 md:h-0"/>
+    <h2 class="text-[clamp(1.5rem,4vw,3rem)] font-bold mb-8 text-shadow">福建省中式台球城市精英联赛</h2>
+    <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
+        <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">九座城市</div>
+        <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">九站连打</div>
+        <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">角逐省冠</div>
+    </div>
+    <div class="bg-white/10 backdrop-blur-sm rounded-xl inline-block px-6 py-3 text-lg font-bold">
+        冠军奖金：50,000元
+    </div>
+  </div>
+</section>
 
     <!-- 赛事站点列表 -->
     <section id="schedule" class="py-16 bg-white">
