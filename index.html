@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025年福建省·球坦克·LP 中式台球城市精英联赛</title>
+    
+    <!-- 1. 资源预连接：提前建立CDN连接，减少DNS解析时间 -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- 2. 关键CSS优先加载 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 3. 预加载首屏关键图片（头部背景图） -->
+    <link rel="preload" href="TP001.webp" as="image" type="image/webp">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -38,6 +48,37 @@
             }
         }
     </style>
+    <!-- 积分表格样式合并到头部，减少二次渲染 -->
+    <style>
+        .score-table-container {
+            min-height: 320px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.4) transparent;
+        }
+        .score-table-container::-webkit-scrollbar {
+            height: 7px;
+        }
+        .score-table-container::-webkit-scrollbar-thumb {
+            background-color: rgba(255,255,255,0.4);
+            border-radius: 4px;
+        }
+        .score-table {
+            width: 1200px !important;
+            margin: 0 auto !important;
+        }
+        @media (max-width: 768px) {
+            .score-table th:nth-child(21),
+            .score-table td:nth-child(21) {
+                right: 0 !important;
+                box-shadow: -2px 0 6px rgba(0,0,0,0.15);
+            }
+            .score-table th:not(:nth-child(21)),
+            .score-table td:not(:nth-child(21)) {
+                padding: 6px 3px !important;
+                font-size: 11px !important;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans text-dark">
     <!-- 粘性容器：包含导航栏、提示文字、站点行 -->
@@ -46,12 +87,12 @@
         <header id="mainNav" class="nav-transition relative z-10">
             <div class="container mx-auto px-4">
                 <div class="flex items-center justify-between h-16 md:h-20">
-                    <!-- 左侧Logo -->
+                    <!-- 左侧Logo（添加懒加载，非首屏核心） -->
                     <div class="flex items-center">
-                        <img src="logo2-14.webp" alt="球坦克 × LP" class="h-8 md:h-10 mr-2" />
+                        <img src="logo2-14.webp" alt="球坦克 × LP" class="h-8 md:h-10 mr-2" loading="lazy" />
                     </div>
 
-                    <!-- 桌面端导航（保持不变） -->
+                    <!-- 桌面端导航 -->
                     <nav class="hidden md:flex items-center space-x-1">
                         <a href="#schedule" class="px-4 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all">赛事安排</a>
                         <a href="#scoreboard" class="px-4 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all">选手积分</a>
@@ -59,7 +100,7 @@
                         <a href="#contact" class="px-4 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all">联系我们</a>
                     </nav>
 
-                    <!-- 移动端右侧按钮组（新增两个按钮，与菜单按钮整体右对齐） -->
+                    <!-- 移动端右侧按钮组 -->
                     <div class="flex items-center md:hidden space-x-2">
                         <a href="#schedule" class="px-3 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all text-sm">赛事战况</a>
                         <a href="#scoreboard" class="px-3 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all text-sm">积分排名</a>
@@ -71,7 +112,7 @@
                 </div>
             </div>
 
-            <!-- 移动端导航菜单（保持原有结构） -->
+            <!-- 移动端导航菜单 -->
             <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
                 <div class="container mx-auto px-4 py-3 space-y-1">
                     <a href="#schedule" class="block px-4 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary">赛事安排</a>
@@ -179,7 +220,7 @@
         </div>
     </div>
 
-    <!-- 核心功能JS -->
+    <!-- 核心功能JS（提前加载，保证交互优先） -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuBtn = document.getElementById('menuBtn');
@@ -207,7 +248,7 @@
                 }
             });
 
-            // 2. 滚动逻辑（PC端不隐藏导航栏，移动端保持原有逻辑）
+            // 2. 滚动逻辑
             window.addEventListener('scroll', function() {
                 const currentScrollTop = window.scrollY;
                 const isMobile = window.innerWidth < 768;
@@ -284,9 +325,10 @@
         
         <div class="container mx-auto px-4 text-center relative z-10">
             <div class="flex flex-col justify-center items-center mb-4">
-                <img src="logo-14外发光.webp" alt="球坦克LP球杆杯·中式台球城市精英联赛" class="h-10 mx-2" />
+                <!-- 非首屏核心图片懒加载 -->
+                <img src="logo-14外发光.webp" alt="球坦克LP球杆杯·中式台球城市精英联赛" class="h-10 mx-2" loading="lazy" />
             </div>
-            <img src="球杆杯.webp" alt="球杆杯" class="block mx-auto my-18 h-16 md:h-28" />
+            <img src="球杆杯.webp" alt="球杆杯" class="block mx-auto my-18 h-16 md:h-28" loading="lazy" />
             <h2 class="text-[clamp(1.5rem,4vw,3rem)] font-bold mb-8 text-shadow">福建省中式台球城市精英联赛</h2>
             <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
                 <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">九座城市</div>
@@ -300,27 +342,29 @@
     </section>
 
     <!-- 赛事站点列表 -->
-<!-- 赛事站点列表 -->
-<section id="schedule" class="py-16 
-    bg-cover bg-center bg-no-repeat bg-fixed" 
-    style="background-image: url('bg.webp');">
-    <div class="container mx-auto px-0"> <!-- 保持满版无内边距 -->
-        <!-- 标题区域：文字颜色适配背景图，确保可读性 -->
-        <div class="text-center mb-12 px-4">
-    <img src="赛程上.webp" 
-         alt="赛事站点安排标题" 
-         class="w-full max-w-3xl mx-auto h-auto" 
-         style="object-fit: contain;">
-   </div>
-        <!-- 前景图片：居中满版显示 -->
-        <div class="w-full">
-            <img src="赛事站点.webp" 
-                 alt="赛事站点安排" 
-                 class="w-full h-auto object-cover mx-auto"
-                 style="max-width: 100vw;"> <!-- 确保图片完全占满屏幕宽度 -->
+    <section id="schedule" class="py-16 
+        bg-cover bg-center bg-no-repeat bg-fixed" 
+        style="background-image: url('bg.webp');">
+        <div class="container mx-auto px-0">
+            <!-- 标题图片：懒加载（非首屏） -->
+            <div class="text-center mb-12 px-4">
+                <img src="赛程上.webp" 
+                     alt="赛事站点安排标题" 
+                     class="w-full max-w-3xl mx-auto h-auto" 
+                     style="object-fit: contain;"
+                     loading="lazy">
+            </div>
+            <!-- 前景图片：懒加载（非首屏） -->
+            <div class="w-full">
+                <img src="赛事站点.webp" 
+                     alt="赛事站点安排" 
+                     class="w-full h-auto object-cover mx-auto"
+                     style="max-width: 100vw;"
+                     loading="lazy">
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
     <!-- 赛事亮点 -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
@@ -364,100 +408,6 @@
             <p class="mt-6 text-white/80">注：此表格仅展示前100选手比赛积分</p>
         </div>
     </section>
-    <script>
-        // 积分表格加载
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('score.json')
-                .then(res => {
-                    if (!res.ok) throw new Error('积分数据加载失败（请检查文件路径）');
-                    return res.json();
-                })
-                .then(data => {
-                    if (!data.length) {
-                        document.getElementById('excelTable').innerHTML = '<p class="text-white/80">暂无积分数据</p>';
-                        return;
-                    }
-
-                    let html = '<table class="bg-white/10 rounded-xl shadow text-dark score-table" style="width: 1200px; border-collapse: collapse;">';
-                    // 表头行
-                    html += '<thead><tr>';
-                    data[0].forEach((cell, idx) => {
-                        if ([2,4,6,8,10,12,14,16,18].includes(idx)) return;
-                        const isTotalScore = idx === 20;
-                        const thStyle = isTotalScore 
-                            ? 'position: sticky; right: 0; z-index: 30; width: 80px; background: #1D2939; color: white;' 
-                            : 'background: #165DFF; color: white;';
-
-                        if ([3,5,7,9,11,13,15,17,19].includes(idx)) {
-                            html += `<th colspan="2" style="${thStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${data[0][idx-1]}</th>`;
-                        } else if (idx === 0 || idx === 1 || idx === 20) {
-                            html += `<th rowspan="2" style="${thStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell}</th>`;
-                        }
-                    });
-                    html += '</tr><tr>';
-                    // 子表头行
-                    data[1].forEach((cell, idx) => {
-                        if (idx === 0 || idx === 1 || idx === 20) return;
-                        html += `<th style="background: #165DFF; color: white; padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell}</th>`;
-                    });
-                    html += '</tr></thead><tbody>';
-
-                    // 数据行
-                    const maxRows = 100;
-                    const endIndex = Math.min(2 + maxRows, data.length);
-                    for (let i = 2; i < endIndex; i++) {
-                        const rowBg = i % 2 ? 'background: rgba(219, 234, 254, 0.3);' : 'background: white;';
-                        html += `<tr style="${rowBg}">`;
-                        data[i].forEach((cell, idx) => {
-                            const isTotalScore = idx === 20;
-                            const tdStyle = isTotalScore 
-                                ? 'position: sticky; right: 0; z-index: 20; width: 80px; background: rgba(29, 41, 57, 0.9); color: white; font-weight: 500;' 
-                                : 'color: #1D2939;';
-
-                            html += `<td style="${tdStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell ?? 0}</td>`;
-                        });
-                        html += '</tr>';
-                    }
-
-                    html += '</tbody></table>';
-                    document.getElementById('excelTable').innerHTML = html;
-                })
-                .catch(err => {
-                    console.error('积分加载错误：', err);
-                    document.getElementById('excelTable').innerHTML = `<p class="text-white/80">${err.message}</p>`;
-                });
-        });
-    </script>
-    <style>
-        .score-table-container {
-            min-height: 320px;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.4) transparent;
-        }
-        .score-table-container::-webkit-scrollbar {
-            height: 7px;
-        }
-        .score-table-container::-webkit-scrollbar-thumb {
-            background-color: rgba(255,255,255,0.4);
-            border-radius: 4px;
-        }
-        .score-table {
-            width: 1200px !important;
-            margin: 0 auto !important;
-        }
-        @media (max-width: 768px) {
-            .score-table th:nth-child(21),
-            .score-table td:nth-child(21) {
-                right: 0 !important;
-                box-shadow: -2px 0 6px rgba(0,0,0,0.15);
-            }
-            .score-table th:not(:nth-child(21)),
-            .score-table td:not(:nth-child(21)) {
-                padding: 6px 3px !important;
-                font-size: 11px !important;
-            }
-        }
-    </style>
 
     <!-- 总决赛区域 -->
     <section id="finals" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
@@ -527,5 +477,71 @@
             </div>
         </div>
     </footer>
+
+    <!-- 非核心JS（积分表格）延迟加载，不阻塞首屏 -->
+    <script defer>
+        // 积分表格加载（defer确保DOM解析完成后执行，不阻塞渲染）
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('score.json')
+                .then(res => {
+                    if (!res.ok) throw new Error('积分数据加载失败（请检查文件路径）');
+                    return res.json();
+                })
+                .then(data => {
+                    if (!data.length) {
+                        document.getElementById('excelTable').innerHTML = '<p class="text-white/80">暂无积分数据</p>';
+                        return;
+                    }
+
+                    let html = '<table class="bg-white/10 rounded-xl shadow text-dark score-table" style="width: 1200px; border-collapse: collapse;">';
+                    // 表头行
+                    html += '<thead><tr>';
+                    data[0].forEach((cell, idx) => {
+                        if ([2,4,6,8,10,12,14,16,18].includes(idx)) return;
+                        const isTotalScore = idx === 20;
+                        const thStyle = isTotalScore 
+                            ? 'position: sticky; right: 0; z-index: 30; width: 80px; background: #1D2939; color: white;' 
+                            : 'background: #165DFF; color: white;';
+
+                        if ([3,5,7,9,11,13,15,17,19].includes(idx)) {
+                            html += `<th colspan="2" style="${thStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${data[0][idx-1]}</th>`;
+                        } else if (idx === 0 || idx === 1 || idx === 20) {
+                            html += `<th rowspan="2" style="${thStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell}</th>`;
+                        }
+                    });
+                    html += '</tr><tr>';
+                    // 子表头行
+                    data[1].forEach((cell, idx) => {
+                        if (idx === 0 || idx === 1 || idx === 20) return;
+                        html += `<th style="background: #165DFF; color: white; padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell}</th>`;
+                    });
+                    html += '</tr></thead><tbody>';
+
+                    // 数据行
+                    const maxRows = 100;
+                    const endIndex = Math.min(2 + maxRows, data.length);
+                    for (let i = 2; i < endIndex; i++) {
+                        const rowBg = i % 2 ? 'background: rgba(219, 234, 254, 0.3);' : 'background: white;';
+                        html += `<tr style="${rowBg}">`;
+                        data[i].forEach((cell, idx) => {
+                            const isTotalScore = idx === 20;
+                            const tdStyle = isTotalScore 
+                                ? 'position: sticky; right: 0; z-index: 20; width: 80px; background: rgba(29, 41, 57, 0.9); color: white; font-weight: 500;' 
+                                : 'color: #1D2939;';
+
+                            html += `<td style="${tdStyle} padding: 8px 4px; border: 1px solid #ddd; font-size: 12px; text-align: center;">${cell ?? 0}</td>`;
+                        });
+                        html += '</tr>';
+                    }
+
+                    html += '</tbody></table>';
+                    document.getElementById('excelTable').innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('积分加载错误：', err);
+                    document.getElementById('excelTable').innerHTML = `<p class="text-white/80">${err.message}</p>`;
+                });
+        });
+    </script>
 </body>
 </html>
