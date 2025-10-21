@@ -56,7 +56,7 @@
             background-size: cover;
             background-position: center 100px; /* 初始位置（顶部/赛事亮点上方） */
             background-repeat: no-repeat;
-            transition: background-position 0.8s ease; /* 平滑过渡 */
+            transition: background-position 1s ease; /* 平滑过渡 */
         }
         /* 背景上移后位置（赛事亮点及下方） */
         body.bg-moved {
@@ -367,7 +367,7 @@
 
     <!-- 赛事亮点区域（分界点） -->
     <section id="highlights-section" class="py-16 relative overflow-hidden">
-        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-0"></div>
+        <div class="absolute inset-0 bg-black/0 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
                 <div class="text-center mb-12">
@@ -442,7 +442,7 @@
         <div class="container mx-auto px-4 text-center relative z-10">
             <img src="选手积分标题图片.webp"  alt="选手积分"class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-primary mx-auto"  style="max-width: 100%; height: auto;"  loading="lazy">
             <div id="excelTable" class="overflow-x-auto score-table-container" style="width: 100%;"></div>
-            <p class="mt-6 text-gray-600">注：此表格仅展示前100选手比赛积分</p>
+            <p class="mt-6 text-white">注：此表格仅展示前100选手比赛积分</p>
         </div>
     </section>
 
