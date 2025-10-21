@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025年福建省·球坦克·LP 中式台球城市精英联赛</title>
     
-    <!-- 1. 资源预连接：提前建立CDN连接，减少DNS解析时间 -->
+    <!-- 资源预连接 -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     
-    <!-- 2. 关键CSS优先加载 -->
+    <!-- 关键CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     
-    <!-- 3. 预加载首屏关键图片（头部背景图） -->
-    <link rel="preload" href="TP001.webp" as="image" type="image/webp">
+    <!-- 预加载背景图 -->
+    <link rel="preload" href="bg2.webp" as="image" type="image/webp">
     
     <script>
         tailwind.config = {
@@ -38,7 +38,7 @@
                 @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
             }
             .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             }
             .nav-transition {
                 @apply transition-transform duration-300 ease-in-out;
@@ -48,8 +48,22 @@
             }
         }
     </style>
-    <!-- 积分表格样式合并到头部，减少二次渲染 -->
     <style>
+        /* 全局背景核心样式 */
+        body {
+            background-image: url('bg2.webp');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center 100px; /* 初始位置（顶部/赛事亮点上方） */
+            background-repeat: no-repeat;
+            transition: background-position 0.8s ease; /* 平滑过渡 */
+        }
+        /* 背景上移后位置（赛事亮点及下方） */
+        body.bg-moved {
+            background-position: center -900px;
+        }
+
+        /* 积分表格样式 */
         .score-table-container {
             min-height: 320px;
             scrollbar-width: thin;
@@ -80,14 +94,14 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-dark">
-    <!-- 粘性容器：包含导航栏、提示文字、站点行 -->
-    <div class="sticky top-0 z-50 bg-white shadow-sm" id="stickyContainer">
-        <!-- 导航栏（可隐藏，层级高于提示文字） -->
+<body class="font-sans text-dark">
+    <!-- 粘性导航容器 -->
+    <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm" id="stickyContainer">
+        <!-- 导航栏 -->
         <header id="mainNav" class="nav-transition relative z-10">
             <div class="container mx-auto px-4">
                 <div class="flex items-center justify-between h-16 md:h-20">
-                    <!-- 左侧Logo（添加懒加载，非首屏核心） -->
+                    <!-- 左侧Logo -->
                     <div class="flex items-center">
                         <img src="logo2-14.webp" alt="球坦克 × LP" class="h-8 md:h-10 mr-2" loading="lazy" />
                     </div>
@@ -104,7 +118,6 @@
                     <div class="flex items-center md:hidden space-x-2">
                         <a href="#schedule" class="px-3 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all text-sm">赛事战况</a>
                         <a href="#scoreboard" class="px-3 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all text-sm">积分排名</a>
-                        <!-- 移动端菜单按钮 -->
                         <button id="menuBtn" class="text-gray-700 focus:outline-none">
                             <i class="fa fa-bars text-xl"></i>
                         </button>
@@ -126,12 +139,12 @@
             </div>
         </header>
 
-        <!-- 导航栏隐藏后显示的提示文字（仅移动端） -->
+        <!-- 移动端导航提示 -->
         <div id="slideTip" class="hidden md:hidden absolute top-0 left-0 w-full h-16 md:h-20 flex items-center justify-center text-primary font-medium z-5">
             向右滑动浏览赛事进度 >>
         </div>
 
-        <!-- 站点行 -->
+        <!-- 站点导航行 -->
         <div id="siteNav" class="bg-white border-b shadow-sm relative z-10">
             <div class="relative h-16 md:h-20 overflow-x-auto">
                 <style>
@@ -143,7 +156,7 @@
                 </style>
 
                 <div class="flex h-full px-4 space-x-4 absolute top-0 left-0 justify-center">
-                    <!-- 站点1：泉州站 -->
+                    <!-- 站点列表 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第一站</span>
@@ -151,7 +164,6 @@
                             <span class="text-xs md:text-sm text-gray-600">10月10日-13日</span>
                         </div>
                     </div>
-                    <!-- 站点2：厦门站 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第二站</span>
@@ -159,7 +171,6 @@
                             <span class="text-xs md:text-sm text-gray-600">10月16日-19日</span>
                         </div>
                     </div>
-                    <!-- 站点3：漳州站 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第三站</span>
@@ -167,7 +178,6 @@
                             <span class="text-xs md:text-sm text-gray-600">10月22日-25日</span>
                         </div>
                     </div>
-                    <!-- 站点4：龙岩站 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第四站</span>
@@ -175,7 +185,6 @@
                             <span class="text-xs md:text-sm text-gray-600">10月28日-31日</span>
                         </div>
                     </div>
-                    <!-- 站点5：三明站 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第五站</span>
@@ -183,7 +192,6 @@
                             <span class="text-xs md:text-sm text-gray-600">11月3日-6日</span>
                         </div>
                     </div>
-                    <!-- 站点6：南平站 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第六站</span>
@@ -191,7 +199,6 @@
                             <span class="text-xs md:text-sm text-gray-600">11月9日-12日</span>
                         </div>
                     </div>
-                    <!-- 站点7：宁德站 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第七站</span>
@@ -199,7 +206,6 @@
                             <span class="text-xs md:text-sm text-gray-600">11月15日-18日</span>
                         </div>
                     </div>
-                    <!-- 站点8：福州站 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第八站</span>
@@ -207,7 +213,6 @@
                             <span class="text-xs md:text-sm text-gray-600">11月21日-24日</span>
                         </div>
                     </div>
-                    <!-- 站点9：莆田站 -->
                     <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
                         <div class="text-center">
                             <span class="text-xs md:text-sm text-gray-500">第九站</span>
@@ -220,7 +225,7 @@
         </div>
     </div>
 
-    <!-- 核心功能JS（提前加载，保证交互优先） -->
+    <!-- 导航与滚动逻辑 -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuBtn = document.getElementById('menuBtn');
@@ -232,7 +237,7 @@
             let lastScrollTop = 0;
             let isMenuOpen = false;
 
-            // 1. 移动端菜单切换
+            // 移动端菜单切换
             menuBtn.addEventListener('click', function() {
                 isMenuOpen = !isMenuOpen;
                 mobileMenu.classList.toggle('hidden');
@@ -248,7 +253,7 @@
                 }
             });
 
-            // 2. 滚动逻辑
+            // 滚动逻辑（导航栏显示/隐藏）
             window.addEventListener('scroll', function() {
                 const currentScrollTop = window.scrollY;
                 const isMobile = window.innerWidth < 768;
@@ -256,7 +261,6 @@
                 if (isMenuOpen) return;
 
                 if (!isMobile) {
-                    // PC端逻辑
                     if (currentScrollTop > 100) {
                         stickyContainer.classList.add('shadow-md');
                     } else {
@@ -266,7 +270,6 @@
                         }
                     }
                 } else {
-                    // 移动端逻辑
                     if (currentScrollTop > lastScrollTop && currentScrollTop > 100) {
                         mainNav.classList.add('nav-hidden');
                         stickyContainer.classList.add('shadow-md');
@@ -282,7 +285,7 @@
                 lastScrollTop = currentScrollTop < 0 ? 0 : currentScrollTop;
             });
 
-            // 3. 平滑滚动
+            // 平滑滚动（锚点跳转）
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -306,7 +309,7 @@
                 });
             });
 
-            // 辅助函数：切换提示文字
+            // 移动端导航提示显示控制
             function toggleSlideTip() {
                 if (mainNav.classList.contains('nav-hidden') && !isMenuOpen) {
                     slideTip.classList.remove('hidden');
@@ -317,15 +320,15 @@
         });
     </script>
 
-    <!-- 赛事头部区域 -->
-    <section class="text-white py-16 md:py-24 relative overflow-hidden bg-center bg-cover" style="background-image: url('TP001.webp');">
+    <!-- 赛事头部区域（上方区域，需恢复背景） -->
+    <section class="text-white py-16 md:py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/30 z-0"></div>
         <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-white/10"></div>
         <div class="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-white/10"></div>
         <div class="absolute top-1/2 left-1/3 w-16 h-16 rounded-full bg-white/10"></div>
         
         <div class="container mx-auto px-4 text-center relative z-10">
             <div class="flex flex-col justify-center items-center mb-4">
-                <!-- 非首屏核心图片懒加载 -->
                 <img src="logo-14外发光.webp" alt="球坦克LP球杆杯·中式台球城市精英联赛" class="h-10 mx-2" loading="lazy" />
             </div>
             <img src="球杆杯.webp" alt="球杆杯" class="block mx-auto my-18 h-16 md:h-28" loading="lazy" />
@@ -341,12 +344,10 @@
         </div>
     </section>
 
-    <!-- 赛事站点列表 -->
-    <section id="schedule" class="py-16 
-        bg-cover bg-center bg-no-repeat bg-fixed" 
-        style="background-image: url('bg.webp');">
-        <div class="container mx-auto px-0">
-            <!-- 标题图片：懒加载（非首屏） -->
+    <!-- 赛事站点列表（上方区域，需恢复背景） -->
+    <section id="schedule" class="py-16 relative">
+        <div class="absolute inset-0 bg-white/0 backdrop-blur-sm z-0"></div>
+        <div class="container mx-auto px-0 relative z-10">
             <div class="text-center mb-12 px-4">
                 <img src="赛程上.webp" 
                      alt="赛事站点安排标题" 
@@ -354,7 +355,6 @@
                      style="object-fit: contain;"
                      loading="lazy">
             </div>
-            <!-- 前景图片：懒加载（非首屏） -->
             <div class="w-full">
                 <img src="赛事站点.webp" 
                      alt="赛事站点安排" 
@@ -365,9 +365,10 @@
         </div>
     </section>
 
-    <!-- 赛事亮点 -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
+    <!-- 赛事亮点区域（分界点） -->
+    <section id="highlights-section" class="py-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white/0 backdrop-blur-sm z-0"></div>
+        <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
                 <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-primary">赛事亮点</h2>
             </div>
@@ -398,18 +399,52 @@
                 </div>
             </div>
         </div>
+
+        <!-- 核心修复：背景位置控制逻辑 -->
+        <script>
+            const highlightsSection = document.getElementById('highlights-section');
+            // 获取赛事亮点区域的顶部位置（作为判断基准）
+            const highlightsTop = highlightsSection.offsetTop;
+            
+            // 双重判断：既监听元素可见性，也监听滚动位置（确保顶部恢复）
+            function updateBackground() {
+                const scrollTop = window.scrollY;
+                const viewportHeight = window.innerHeight;
+                
+                // 当滚动到顶部（scrollTop < 100），强制恢复背景
+                if (scrollTop < 100) {
+                    document.body.classList.remove('bg-moved');
+                    return;
+                }
+                
+                // 当滚动位置超过赛事亮点区域顶部50px，背景上移
+                if (scrollTop > highlightsTop - 50) {
+                    document.body.classList.add('bg-moved');
+                } else {
+                    // 未超过时（在上方区域），恢复背景
+                    document.body.classList.remove('bg-moved');
+                }
+            }
+            
+            // 初始加载时执行一次
+            updateBackground();
+            
+            // 监听滚动事件（更直接的位置判断，避免Observer延迟）
+            window.addEventListener('scroll', updateBackground);
+        </script>
     </section>
 
-    <!-- 选手积分 -->
-    <section id="scoreboard" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
+    <!-- 选手积分区域（下方区域，背景保持上移） -->
+    <section id="scoreboard" class="py-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white/0 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-4 text-center relative z-10">
-            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-shadow">选手积分</h2>
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-primary">选手积分</h2>
             <div id="excelTable" class="overflow-x-auto score-table-container" style="width: 100%;"></div>
-            <p class="mt-6 text-white/80">注：此表格仅展示前100选手比赛积分</p>
+            <p class="mt-6 text-gray-600">注：此表格仅展示前100选手比赛积分</p>
         </div>
     </section>
 
-    <!-- 总决赛区域 -->
+    <!-- 总决赛区域（下方区域，背景保持上移） -->
     <section id="finals" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
         <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/5"></div>
         <div class="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-white/5"></div>
@@ -448,8 +483,8 @@
         </div>
     </section>
 
-    <!-- 页脚 -->
-    <footer id="contact" class="bg-dark text-white py-12">
+    <!-- 页脚（下方区域，背景保持上移） -->
+    <footer id="contact" class="bg-dark text-white py-12 relative z-10">
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-8">
@@ -478,9 +513,8 @@
         </div>
     </footer>
 
-    <!-- 非核心JS（积分表格）延迟加载，不阻塞首屏 -->
+    <!-- 积分表格加载脚本 -->
     <script defer>
-        // 积分表格加载（defer确保DOM解析完成后执行，不阻塞渲染）
         document.addEventListener('DOMContentLoaded', function() {
             fetch('score.json')
                 .then(res => {
@@ -492,7 +526,7 @@
                         document.getElementById('excelTable').innerHTML = '<p class="text-white/80">暂无积分数据</p>';
                         return;
                     }
-
+                    
                     let html = '<table class="bg-white/10 rounded-xl shadow text-dark score-table" style="width: 1200px; border-collapse: collapse;">';
                     // 表头行
                     html += '<thead><tr>';
@@ -517,7 +551,7 @@
                     });
                     html += '</tr></thead><tbody>';
 
-                    // 数据行
+                    // 数据行（最多显示100条）
                     const maxRows = 100;
                     const endIndex = Math.min(2 + maxRows, data.length);
                     for (let i = 2; i < endIndex; i++) {
