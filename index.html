@@ -90,25 +90,22 @@
             opacity: 0.9;
         }
         
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(22, 93, 255, 0.1);
-            border-top-color: #165DFF;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        
+        /* 移除原旋转圆圈样式 */
         .loader-text {
             color: #165DFF;
             font-size: 18px;
             font-weight: 600;
             letter-spacing: 1px;
+            text-align: center;
+            max-width: 90%;
+            /* 闪烁动画 */
+            animation: blink 1.5s ease-in-out infinite alternate;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        /* 闪烁动画定义 */
+        @keyframes blink {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
         }
         
         @keyframes fillGold {
@@ -181,8 +178,8 @@
             <img src="jz.png" alt="加载图片" class="loader-logo" />
             <div class="loader-logo-mask"></div>
         </div>
-        <div class="loader-spinner"></div>
-        <div class="loader-text">加载中...</div>
+        <!-- 移除旋转圆圈，修改加载文字 -->
+        <div class="loader-text">以梦为杆，一杆撑起热爱与远方....</div>
     </div>
 
     <!-- 主内容区域 -->
