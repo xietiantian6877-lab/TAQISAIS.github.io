@@ -13,8 +13,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     
-    <!-- 预加载背景图 -->
+    <!-- 预加载图片（仅后台下载，不影响加载画面） -->
     <link rel="preload" href="bg2.webp" as="image" type="image/webp">
+    <link rel="preload" href="logo-14外发光.webp" as="image" type="image/webp">
     
     <script>
         tailwind.config = {
@@ -49,18 +50,49 @@
         }
     </style>
     <style>
-        /* 全局背景核心样式 */
+        /* 加载动画核心样式 - 仅显示白色背景和logo */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff; /* 固定白色背景，不移动 */
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out 0.6s; /* 延迟淡出，等待饱和度恢复 */
+        }
+        
+        .loader-image {
+            width: 80%;
+            max-width: 500px;
+            height: auto;
+            filter: saturate(0.1); /* 初始低饱和度 */
+            transition: filter 1s ease-out; /* 饱和度恢复动画 */
+        }
+        
+        /* 全局样式 - 初始状态彻底隐藏背景和内容 */
         body {
-            background-image: url('bg2.webp');
+            /* 不预先设置背景图，改为JS动态添加 */
             background-attachment: fixed;
             background-size: cover;
-            background-position: center 100px; /* 初始位置（顶部/赛事亮点上方） */
+            background-position: center 100px;
             background-repeat: no-repeat;
-            transition: background-position 0.8s ease; /* 平滑过渡 */
+            transition: background-position 0.8s ease;
+            opacity: 0;
+            visibility: hidden; /* 彻底隐藏，比opacity更严格 */
+            transition: opacity 1s ease-out 1.2s, visibility 0s linear 1.2s;
         }
-        /* 背景上移后位置（赛事亮点及下方） */
+        
         body.bg-moved {
             background-position: center -900px;
+        }
+        
+        body.loaded {
+            opacity: 1;
+            visibility: visible; /* 加载完成后才可见 */
         }
 
         /* 积分表格样式 */
@@ -95,6 +127,11 @@
     </style>
 </head>
 <body class="font-sans text-dark">
+    <!-- 加载动画 - 仅包含logo -->
+    <div id="loader">
+        <img src="logo-14外发光.webp" alt="加载中" class="loader-image" />
+    </div>
+
     <!-- 粘性导航容器 -->
     <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm" id="stickyContainer">
         <!-- 导航栏 -->
@@ -320,7 +357,7 @@
         });
     </script>
 
-    <!-- 赛事头部区域（上方区域，需恢复背景） -->
+    <!-- 赛事头部区域 -->
     <section class="text-white py-16 md:py-24 relative overflow-hidden">
         <div class="absolute inset-0 bg-black/30 z-0"></div>
         <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-white/10"></div>
@@ -344,7 +381,7 @@
         </div>
     </section>
 
-    <!-- 赛事站点列表（上方区域，需恢复背景） -->
+    <!-- 赛事站点列表 -->
     <section id="schedule" class="py-16 relative">
         <div class="absolute inset-0 bg-white/0 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-0 relative z-10">
@@ -365,7 +402,7 @@
         </div>
     </section>
 
-    <!-- 赛事亮点区域（分界点） -->
+    <!-- 赛事亮点区域 -->
     <section id="highlights-section" class="py-16 relative overflow-hidden">
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-4 relative z-10">
@@ -402,41 +439,32 @@
             </div>
         </div>
 
-        <!-- 核心修复：背景位置控制逻辑 -->
+        <!-- 背景位置控制逻辑 -->
         <script>
             const highlightsSection = document.getElementById('highlights-section');
-            // 获取赛事亮点区域的顶部位置（作为判断基准）
             const highlightsTop = highlightsSection.offsetTop;
             
-            // 双重判断：既监听元素可见性，也监听滚动位置（确保顶部恢复）
             function updateBackground() {
                 const scrollTop = window.scrollY;
-                const viewportHeight = window.innerHeight;
                 
-                // 当滚动到顶部（scrollTop < 100），强制恢复背景
                 if (scrollTop < 100) {
                     document.body.classList.remove('bg-moved');
                     return;
                 }
                 
-                // 当滚动位置超过赛事亮点区域顶部50px，背景上移
                 if (scrollTop > highlightsTop - 50) {
                     document.body.classList.add('bg-moved');
                 } else {
-                    // 未超过时（在上方区域），恢复背景
                     document.body.classList.remove('bg-moved');
                 }
             }
             
-            // 初始加载时执行一次
             updateBackground();
-            
-            // 监听滚动事件（更直接的位置判断，避免Observer延迟）
             window.addEventListener('scroll', updateBackground);
         </script>
     </section>
 
-    <!-- 选手积分区域（下方区域，背景保持上移） -->
+    <!-- 选手积分区域 -->
     <section id="scoreboard" class="py-16 relative overflow-hidden">
         <div class="absolute inset-0 bg-white/0 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-4 text-center relative z-10">
@@ -446,7 +474,7 @@
         </div>
     </section>
 
-    <!-- 总决赛区域（下方区域，背景保持上移） -->
+    <!-- 总决赛区域 -->
     <section id="finals" class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
         <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/5"></div>
         <div class="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-white/5"></div>
@@ -485,7 +513,7 @@
         </div>
     </section>
 
-    <!-- 页脚（下方区域，背景保持上移） -->
+    <!-- 页脚 -->
     <footer id="contact" class="bg-dark text-white py-12 relative z-10">
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
@@ -515,8 +543,70 @@
         </div>
     </footer>
 
-    <!-- 积分表格加载脚本 -->
-    <script defer>
+    <!-- 核心加载动画脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            const loaderImage = document.querySelector('.loader-image');
+            const allImages = document.querySelectorAll('img');
+            let loadedImages = 0;
+            const totalImages = allImages.length;
+
+            // 监听所有图片加载（排除加载动画自身的logo）
+            allImages.forEach(img => {
+                if (img.classList.contains('loader-image')) return;
+                
+                if (img.complete) {
+                    imageLoaded();
+                } else {
+                    img.addEventListener('load', imageLoaded);
+                    img.addEventListener('error', imageLoaded); // 错误处理
+                }
+            });
+
+            function imageLoaded() {
+                loadedImages++;
+                
+                // 所有内容加载完成后执行
+                if (loadedImages === totalImages - 1) {
+                    // 1. 恢复logo饱和度（1秒动画）
+                    setTimeout(() => {
+                        loaderImage.style.filter = 'saturate(1)';
+                        
+                        // 2. 饱和度恢复后，淡出白色背景和logo（1秒动画）
+                        setTimeout(() => {
+                            loader.style.opacity = '0';
+                            
+                            // 3. 加载层消失后，设置背景图并显示页面
+                            setTimeout(() => {
+                                loader.style.display = 'none';
+                                // 动态添加背景图（关键：此时才加载背景）
+                                document.body.style.backgroundImage = 'url("bg2.webp")';
+                                // 标记为加载完成，显示页面
+                                document.body.classList.add('loaded');
+                            }, 1000);
+                        }, 600); // 等待饱和度恢复后再开始淡出
+                    }, 300);
+                }
+            }
+
+            // 超时保护 - 防止加载卡住（10秒后强制完成）
+            setTimeout(() => {
+                if (loadedImages < totalImages - 1) {
+                    loaderImage.style.filter = 'saturate(1)';
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            document.body.style.backgroundImage = 'url("bg2.webp")';
+                            document.body.classList.add('loaded');
+                        }, 1000);
+                    }, 600);
+                }
+            }, 10000);
+        });
+
+        // 积分表格加载脚本
         document.addEventListener('DOMContentLoaded', function() {
             fetch('score.json')
                 .then(res => {
