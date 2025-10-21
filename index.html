@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025年福建省·球坦克·LP 中式台球城市精英联赛</title>
     
-    <!-- 资源预连接 -->
+    <!-- 外部资源 -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    
-    <!-- 关键CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     
-    <!-- 预加载图片（仅后台下载，不影响加载画面） -->
+    <!-- 预加载关键图片（仅后台下载，不影响显示） -->
     <link rel="preload" href="bg2.webp" as="image" type="image/webp">
     <link rel="preload" href="logo-14外发光.webp" as="image" type="image/webp">
     
+    <!-- Tailwind 配置 -->
     <script>
         tailwind.config = {
             theme: {
@@ -30,6 +29,8 @@
             }
         }
     </script>
+    
+    <!-- 自定义工具类 -->
     <style type="text/tailwindcss">
         @layer utilities {
             .bg-gradient-event {
@@ -49,50 +50,66 @@
             }
         }
     </style>
+    
+    <!-- 核心样式 -->
     <style>
-        /* 加载动画核心样式 - 仅显示白色背景和logo */
+        /* 加载动画 - 确保logo显示的核心样式 */
         #loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #fff; /* 固定白色背景，不移动 */
+            background-color: #fff; /* 纯白背景 */
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 1s ease-out 0.6s; /* 延迟淡出，等待饱和度恢复 */
+            transition: opacity 1s ease-out 0.6s;
         }
         
+        /* 强制logo显示的样式（解决不显示问题） */
         .loader-image {
-            width: 80%;
-            max-width: 500px;
-            height: auto;
+            width: 80%;         /* 自适应宽度 */
+            max-width: 500px;   /* 最大宽度限制 */
+            height: auto;       /* 保持宽高比 */
             filter: saturate(0.1); /* 初始低饱和度 */
-            transition: filter 1s ease-out; /* 饱和度恢复动画 */
+            transition: filter 1s ease-out; /* 饱和度动画 */
+            display: block;     /* 确保为块级元素（关键） */
+            margin: 0 auto;     /* 强制居中（关键） */
+            object-fit: contain;/* 确保图片完整显示 */
+            border: none;       /* 去除可能的边框 */
         }
         
-        /* 全局样式 - 初始状态彻底隐藏背景和内容 */
+        /* 图片加载失败时的备用提示（防止空白） */
+        .loader-fallback {
+            color: #333;
+            font-size: 18px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        /* 页面初始状态（完全隐藏内容和背景） */
         body {
-            /* 不预先设置背景图，改为JS动态添加 */
             background-attachment: fixed;
             background-size: cover;
             background-position: center 100px;
             background-repeat: no-repeat;
             transition: background-position 0.8s ease;
-            opacity: 0;
-            visibility: hidden; /* 彻底隐藏，比opacity更严格 */
+            opacity: 0;         /* 透明 */
+            visibility: hidden; /* 完全隐藏（比opacity更严格） */
             transition: opacity 1s ease-out 1.2s, visibility 0s linear 1.2s;
         }
         
+        /* 背景位置切换 */
         body.bg-moved {
             background-position: center -900px;
         }
         
+        /* 加载完成后显示页面 */
         body.loaded {
             opacity: 1;
-            visibility: visible; /* 加载完成后才可见 */
+            visibility: visible;
         }
 
         /* 积分表格样式 */
@@ -127,14 +144,18 @@
     </style>
 </head>
 <body class="font-sans text-dark">
-    <!-- 加载动画 - 仅包含logo -->
+    <!-- 加载动画容器（核心：仅显示logo和白色背景） -->
     <div id="loader">
-        <img src="logo-14外发光.webp" alt="加载中" class="loader-image" />
+        <!-- 注意：确保"logo-14外发光.webp"与当前HTML文件在同一文件夹！ -->
+        <!-- 若图片加载失败，会显示"加载中..."文字（避免空白） -->
+        <img src="logo-14外发光.webp" 
+             alt="球坦克LP联赛logo" 
+             class="loader-image"
+             onerror="this.parentNode.innerHTML='<div class=\'loader-fallback\'>加载中...</div>'">
     </div>
 
-    <!-- 粘性导航容器 -->
+    <!-- 粘性导航栏 -->
     <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm" id="stickyContainer">
-        <!-- 导航栏 -->
         <header id="mainNav" class="nav-transition relative z-10">
             <div class="container mx-auto px-4">
                 <div class="flex items-center justify-between h-16 md:h-20">
@@ -151,7 +172,7 @@
                         <a href="#contact" class="px-4 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all">联系我们</a>
                     </nav>
 
-                    <!-- 移动端右侧按钮组 -->
+                    <!-- 移动端按钮组 -->
                     <div class="flex items-center md:hidden space-x-2">
                         <a href="#schedule" class="px-3 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all text-sm">赛事战况</a>
                         <a href="#scoreboard" class="px-3 py-2 rounded-md text-gray-700 hover:bg-primary/10 hover:text-primary transition-all text-sm">积分排名</a>
@@ -290,7 +311,7 @@
                 }
             });
 
-            // 滚动逻辑（导航栏显示/隐藏）
+            // 滚动时导航栏显示/隐藏逻辑
             window.addEventListener('scroll', function() {
                 const currentScrollTop = window.scrollY;
                 const isMobile = window.innerWidth < 768;
@@ -322,7 +343,7 @@
                 lastScrollTop = currentScrollTop < 0 ? 0 : currentScrollTop;
             });
 
-            // 平滑滚动（锚点跳转）
+            // 锚点平滑滚动
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -346,7 +367,7 @@
                 });
             });
 
-            // 移动端导航提示显示控制
+            // 移动端导航提示控制
             function toggleSlideTip() {
                 if (mainNav.classList.contains('nav-hidden') && !isMenuOpen) {
                     slideTip.classList.remove('hidden');
@@ -407,9 +428,11 @@
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
-                <div class="text-center mb-12">
-            <img src="赛事亮点标题图片.webp"  alt="赛事亮点"class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-primary mx-auto"  style="max-width: 100%; height: auto;"  loading="lazy" >
-        </div>
+                <img src="赛事亮点标题图片.webp"  
+                     alt="赛事亮点"
+                     class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-primary mx-auto"  
+                     style="max-width: 100%; height: auto;"  
+                     loading="lazy" >
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -439,7 +462,7 @@
             </div>
         </div>
 
-        <!-- 背景位置控制逻辑 -->
+        <!-- 背景位置控制 -->
         <script>
             const highlightsSection = document.getElementById('highlights-section');
             const highlightsTop = highlightsSection.offsetTop;
@@ -468,7 +491,11 @@
     <section id="scoreboard" class="py-16 relative overflow-hidden">
         <div class="absolute inset-0 bg-white/0 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-4 text-center relative z-10">
-            <img src="选手积分标题图片.webp"  alt="选手积分"class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-primary mx-auto"  style="max-width: 100%; height: auto;"  loading="lazy">
+            <img src="选手积分标题图片.webp"  
+                 alt="选手积分"
+                 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-primary mx-auto"  
+                 style="max-width: 100%; height: auto;"  
+                 loading="lazy">
             <div id="excelTable" class="overflow-x-auto score-table-container" style="width: 100%;"></div>
             <p class="mt-6 text-gray-600">注：此表格仅展示前100选手比赛积分</p>
         </div>
@@ -543,8 +570,9 @@
         </div>
     </footer>
 
-    <!-- 核心加载动画脚本 -->
+    <!-- 加载动画与积分表格脚本 -->
     <script>
+        // 确保logo和页面加载逻辑
         document.addEventListener('DOMContentLoaded', function() {
             const loader = document.getElementById('loader');
             const loaderImage = document.querySelector('.loader-image');
@@ -552,48 +580,66 @@
             let loadedImages = 0;
             const totalImages = allImages.length;
 
-            // 监听所有图片加载（排除加载动画自身的logo）
+            // 检查logo是否存在并加载
+            if (loaderImage) {
+                console.log('logo元素已找到，开始加载...');
+                // 监听logo自身加载状态
+                loaderImage.addEventListener('load', function() {
+                    console.log('logo加载成功！');
+                });
+                loaderImage.addEventListener('error', function() {
+                    console.error('⚠️ logo加载失败！请检查：1.文件是否存在 2.文件名是否正确（包括大小写） 3.是否与HTML文件在同一文件夹');
+                });
+            } else {
+                console.error('⚠️ 未找到logo元素，请检查HTML中是否有class为"loader-image"的img标签');
+            }
+
+            // 监听所有其他图片加载
             allImages.forEach(img => {
-                if (img.classList.contains('loader-image')) return;
+                if (img.classList.contains('loader-image')) return; // 跳过logo自身
                 
                 if (img.complete) {
                     imageLoaded();
                 } else {
                     img.addEventListener('load', imageLoaded);
-                    img.addEventListener('error', imageLoaded); // 错误处理
+                    img.addEventListener('error', function() {
+                        console.warn('图片加载失败：', this.src);
+                        imageLoaded(); // 即使失败也计数，避免卡住
+                    });
                 }
             });
 
+            // 图片加载计数
             function imageLoaded() {
                 loadedImages++;
+                console.log(`已加载${loadedImages}/${totalImages-1}张图片`);
                 
-                // 所有内容加载完成后执行
+                // 所有图片加载完成
                 if (loadedImages === totalImages - 1) {
                     // 1. 恢复logo饱和度（1秒动画）
                     setTimeout(() => {
-                        loaderImage.style.filter = 'saturate(1)';
+                        if (loaderImage) loaderImage.style.filter = 'saturate(1)';
                         
-                        // 2. 饱和度恢复后，淡出白色背景和logo（1秒动画）
+                        // 2. 饱和度恢复后，淡出加载层（1秒动画）
                         setTimeout(() => {
                             loader.style.opacity = '0';
                             
-                            // 3. 加载层消失后，设置背景图并显示页面
+                            // 3. 加载层消失后，显示背景和页面
                             setTimeout(() => {
                                 loader.style.display = 'none';
-                                // 动态添加背景图（关键：此时才加载背景）
-                                document.body.style.backgroundImage = 'url("bg2.webp")';
-                                // 标记为加载完成，显示页面
-                                document.body.classList.add('loaded');
+                                document.body.style.backgroundImage = 'url("bg2.webp")'; // 动态添加背景
+                                document.body.classList.add('loaded'); // 显示页面
                             }, 1000);
-                        }, 600); // 等待饱和度恢复后再开始淡出
+                        }, 600);
                     }, 300);
                 }
             }
 
-            // 超时保护 - 防止加载卡住（10秒后强制完成）
+            // 超时保护（10秒后强制完成加载）
             setTimeout(() => {
                 if (loadedImages < totalImages - 1) {
-                    loaderImage.style.filter = 'saturate(1)';
+                    console.log('加载超时，强制完成');
+                    if (loaderImage) loaderImage.style.filter = 'saturate(1)';
                     setTimeout(() => {
                         loader.style.opacity = '0';
                         setTimeout(() => {
@@ -610,7 +656,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             fetch('score.json')
                 .then(res => {
-                    if (!res.ok) throw new Error('积分数据加载失败（请检查文件路径）');
+                    if (!res.ok) throw new Error('积分数据加载失败（请检查score.json是否存在）');
                     return res.json();
                 })
                 .then(data => {
@@ -643,7 +689,7 @@
                     });
                     html += '</tr></thead><tbody>';
 
-                    // 数据行（最多显示100条）
+                    // 数据行（最多100条）
                     const maxRows = 100;
                     const endIndex = Math.min(2 + maxRows, data.length);
                     for (let i = 2; i < endIndex; i++) {
@@ -664,7 +710,7 @@
                     document.getElementById('excelTable').innerHTML = html;
                 })
                 .catch(err => {
-                    console.error('积分加载错误：', err);
+                    console.error('积分表格错误：', err);
                     document.getElementById('excelTable').innerHTML = `<p class="text-white/80">${err.message}</p>`;
                 });
         });
