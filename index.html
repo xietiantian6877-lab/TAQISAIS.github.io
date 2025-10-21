@@ -367,15 +367,17 @@
 
     <!-- 赛事亮点区域（分界点） -->
     <section id="highlights-section" class="py-16 relative overflow-hidden">
-        <div class="absolute inset-0 bg-white/0 backdrop-blur-sm z-0"></div>
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
-                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-primary">赛事亮点</h2>
+                <div class="text-center mb-12">
+            <img src="赛事亮点标题图片.webp"  alt="赛事亮点"class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-primary mx-auto"  style="max-width: 100%; height: auto;"  loading="lazy" >
+        </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 <div class="bg-white rounded-xl p-6 shadow-sm text-center card-hover">
-                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div class="w-16 h-1 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fa fa-trophy text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">高额奖金</h3>
@@ -383,7 +385,7 @@
                 </div>
                 
                 <div class="bg-white rounded-xl p-6 shadow-sm text-center card-hover">
-                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div class="w-16 h-1 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fa fa-map-marker text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">九城联动</h3>
@@ -391,7 +393,7 @@
                 </div>
                 
                 <div class="bg-white rounded-xl p-6 shadow-sm text-center card-hover">
-                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div class="w-16 h-1 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fa fa-users text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">精英汇聚</h3>
@@ -438,7 +440,7 @@
     <section id="scoreboard" class="py-16 relative overflow-hidden">
         <div class="absolute inset-0 bg-white/0 backdrop-blur-sm z-0"></div>
         <div class="container mx-auto px-4 text-center relative z-10">
-            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-primary">选手积分</h2>
+            <img src="选手积分标题图片.webp"  alt="选手积分"class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-8 text-primary mx-auto"  style="max-width: 100%; height: auto;"  loading="lazy">
             <div id="excelTable" class="overflow-x-auto score-table-container" style="width: 100%;"></div>
             <p class="mt-6 text-gray-600">注：此表格仅展示前100选手比赛积分</p>
         </div>
