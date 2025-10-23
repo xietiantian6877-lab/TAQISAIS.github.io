@@ -225,93 +225,123 @@
                             <i class="fa fa-phone mr-1"></i> 13305052147
                         </a>
                     </div>
+                   
                 </div>
+            <div id="slideTip" class="hidden md:hidden absolute top-16 md:top-20 left-0 w-full h-16 flex items-center justify-center text-primary font-medium z-5">
+                向右滑动浏览赛事进度 >>
+            </div>
             </header>
 
             <!-- 移动端导航提示 -->
-            <div id="slideTip" class="hidden md:hidden absolute top-0 left-0 w-full h-16 md:h-20 flex items-center justify-center text-primary font-medium z-5">
-                向右滑动浏览赛事进度 >>
-            </div>
 
             <!-- 站点导航行 -->
-            <div id="siteNav" class="bg-white border-b shadow-sm relative z-10">
-                <div class="relative h-16 md:h-20 overflow-x-auto">
-                    <style>
-                        .relative::-webkit-scrollbar { display: none; }
-                        .relative {
-                            -ms-overflow-style: none;
-                            scrollbar-width: none;
-                        }
-                    </style>
+            <!-- 站点导航行（已添加跳转链接） -->
+<div id="siteNav" class="bg-white border-b shadow-sm relative z-10">
+    <div class="relative h-16 md:h-20 overflow-x-auto">
+        <style>
+            .relative::-webkit-scrollbar { display: none; }
+            .relative {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            /* 确保链接覆盖整个卡片，点击区域完整 */
+            .site-link {
+                display: flex;
+                width: 100%;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                color: inherit;
+            }
+        </style>
 
-                    <div class="flex h-full px-4 space-x-4 absolute top-0 left-0 justify-center">
-                        <!-- 站点列表 -->
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第一站</span>
-                                <p class="text-sm md:text-base font-medium">泉州</p>
-                                <span class="text-xs md:text-sm text-gray-600">10月10日-13日</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第二站</span>
-                                <p class="text-sm md:text-base font-medium">厦门</p>
-                                <span class="text-xs md:text-sm text-gray-600">10月16日-19日</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第三站</span>
-                                <p class="text-sm md:text-base font-medium">漳州</p>
-                                <span class="text-xs md:text-sm text-gray-600">10月22日-25日</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第四站</span>
-                                <p class="text-sm md:text-base font-medium">龙岩</p>
-                                <span class="text-xs md:text-sm text-gray-600">10月28日-31日</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第五站</span>
-                                <p class="text-sm md:text-base font-medium">三明</p>
-                                <span class="text-xs md:text-sm text-gray-600">11月3日-6日</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第六站</span>
-                                <p class="text-sm md:text-base font-medium">南平</p>
-                                <span class="text-xs md:text-sm text-gray-600">11月9日-12日</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第七站</span>
-                                <p class="text-sm md:text-base font-medium">宁德</p>
-                                <span class="text-xs md:text-sm text-gray-600">11月15日-18日</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第八站</span>
-                                <p class="text-sm md:text-base font-medium">福州</p>
-                                <span class="text-xs md:text-sm text-gray-600">11月21日-24日</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
-                            <div class="text-center">
-                                <span class="text-xs md:text-sm text-gray-500">第九站</span>
-                                <p class="text-sm md:text-base font-medium">莆田</p>
-                                <span class="text-xs md:text-sm text-gray-600">11月27日-30日</span>
-                            </div>
-                        </div>
+        <div class="flex h-full px-4 space-x-4 absolute top-0 left-0 justify-center">
+            <!-- 站点列表（每个城市已添加对应跳转链接） -->
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="QZ.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第一站</span>
+                        <p class="text-sm md:text-base font-medium">泉州</p>
+                        <span class="text-xs md:text-sm text-gray-600">10月10日-13日</span>
                     </div>
-                </div>
+                </a>
             </div>
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="XM.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第二站</span>
+                        <p class="text-sm md:text-base font-medium">厦门</p>
+                        <span class="text-xs md:text-sm text-gray-600">10月16日-19日</span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="ZZ.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第三站</span>
+                        <p class="text-sm md:text-base font-medium">漳州</p>
+                        <span class="text-xs md:text-sm text-gray-600">10月22日-25日</span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="LY.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第四站</span>
+                        <p class="text-sm md:text-base font-medium">龙岩</p>
+                        <span class="text-xs md:text-sm text-gray-600">10月28日-31日</span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="SM.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第五站</span>
+                        <p class="text-sm md:text-base font-medium">三明</p>
+                        <span class="text-xs md:text-sm text-gray-600">11月3日-6日</span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="NP.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第六站</span>
+                        <p class="text-sm md:text-base font-medium">南平</p>
+                        <span class="text-xs md:text-sm text-gray-600">11月9日-12日</span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="ND.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第七站</span>
+                        <p class="text-sm md:text-base font-medium">宁德</p>
+                        <span class="text-xs md:text-sm text-gray-600">11月15日-18日</span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="FZ.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第八站</span>
+                        <p class="text-sm md:text-base font-medium">福州</p>
+                        <span class="text-xs md:text-sm text-gray-600">11月21日-24日</span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                <a href="PT.html" class="site-link">
+                    <div class="text-center">
+                        <span class="text-xs md:text-sm text-gray-500">第九站</span>
+                        <p class="text-sm md:text-base font-medium">莆田</p>
+                        <span class="text-xs md:text-sm text-gray-600">11月27日-30日</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
 
         <!-- 导航与滚动逻辑 -->
@@ -668,7 +698,7 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             const mask = document.querySelector('.loader-logo-mask');
-            mask.style.animation = `fillGold ${5000}ms linear forwards`;
+            mask.style.animation = `fillGold ${1000}ms linear forwards`;
         });
 
         function waitMinTime(ms) {
@@ -677,7 +707,7 @@
 
         Promise.all([
             new Promise(resolve => window.addEventListener('load', resolve)),
-            waitMinTime(5000)
+            waitMinTime(1000)
         ]).then(() => {
             const loader = document.getElementById('loader');
             const mainContent = document.getElementById('main-content');

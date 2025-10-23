@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛事详情</title>
+    
+    <!-- 资源预连接 -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- 关键CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#FF2E2E',
+                        dark: '#1D2939',
+                        gold: '#ffc907'
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .nav-transition {
+                @apply transition-transform duration-300 ease-in-out;
+            }
+            .nav-hidden {
+                transform: translateY(-100%);
+            }
+        }
+    </style>
+    <!-- 新增：确保图片无额外间距 + 站点导航栏样式（与主页一致） -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        img {
+            display: block; /* 消除图片默认inline底部间隙 */
+        }
+        /* 站点导航滚动隐藏样式 */
+        .site-nav-container::-webkit-scrollbar { 
+            display: none; 
+        }
+        .site-nav-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .site-link {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: inherit;
+        }
+        /* 滑动提示样式（与主页完全同步） */
+        #slideTip {
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 0.5px;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="font-sans text-black bg-gray-50">
+    <!-- 主内容区域 -->
+    <div id="main-content">
+        <!-- 粘性导航容器：整合「返回按钮+站点导航+移动端滑动提示」（与主页结构一致） -->
+        <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm" id="stickyContainer">
+            <!-- 1. 顶部返回导航栏 -->
+            <header id="mainNav" class="nav-transition relative z-10">
+                <div class="container mx-auto px-4">
+                    <div class="flex items-center justify-between h-16 md:h-20">
+                        <!-- 左上角Logo返回主页 -->
+                        <div class="flex items-center">
+                            <a href="index.html?noLoader=true" class="inline-block" title="返回主页">
+                                <img src="logo2-14.webp" alt="返回主页" class="h-8 md:h-10 mr-2" loading="lazy" />
+                            </a>
+                        </div>
+
+                        <!-- 桌面端返回按钮 -->
+                        <nav class="hidden md:flex items-center">
+                            <a href="index.html?noLoader=true" class="px-6 py-3 rounded-md bg-primary text-white hover:bg-primary/90 transition-all">
+                                <i class="fa fa-home mr-2"></i> 返回主页
+                            </a>
+                        </nav>
+
+                        <!-- 移动端：仅保留返回按钮（去掉菜单按钮） -->
+                        <div class="flex items-center md:hidden space-x-2">
+                            <a href="index.html?noLoader=true" class="px-4 py-2 rounded-md bg-primary text-white hover:bg-primary/90 transition-all text-sm">
+                                <i class="fa fa-home mr-1"></i> 主页
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                    <div id="slideTip" class="hidden md:hidden absolute top-16 md:top-20 left-0 w-full h-16 flex items-center justify-center text-primary font-medium z-5">
+                向右滑动浏览赛事进度 >>
+            </div>
+            </header>
+
+            <!-- 3. 站点导航行（与主页完全一致，含跳转链接） -->
+            <div id="siteNav" class="bg-white border-b shadow-sm relative z-10">
+                <div class="site-nav-container relative h-16 md:h-20 overflow-x-auto">
+                    <div class="flex h-full px-4 space-x-4 absolute top-0 left-0 justify-center">
+                        <!-- 泉州 → QZ.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="QZ.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第一站</span>
+                                    <p class="text-sm md:text-base font-medium">泉州</p>
+                                    <span class="text-xs md:text-sm text-gray-600">10月10日-13日</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 厦门 → XM.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="XM.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第二站</span>
+                                    <p class="text-sm md:text-base font-medium">厦门</p>
+                                    <span class="text-xs md:text-sm text-gray-600">10月16日-19日</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 漳州 → ZZ.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="ZZ.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第三站</span>
+                                    <p class="text-sm md:text-base font-medium">漳州</p>
+                                    <span class="text-xs md:text-sm text-gray-600">10月22日-25日</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 龙岩 → LY.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="LY.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第四站</span>
+                                    <p class="text-sm md:text-base font-medium">龙岩</p>
+                                    <span class="text-xs md:text-sm text-gray-600">10月28日-31日</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 三明 → SM.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="SM.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第五站</span>
+                                    <p class="text-sm md:text-base font-medium">三明</p>
+                                    <span class="text-xs md:text-sm text-gray-600">11月3日-6日</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 南平 → NP.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="NP.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第六站</span>
+                                    <p class="text-sm md:text-base font-medium">南平</p>
+                                    <span class="text-xs md:text-sm text-gray-600">11月9日-12日</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 宁德 → ND.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="ND.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第七站</span>
+                                    <p class="text-sm md:text-base font-medium">宁德</p>
+                                    <span class="text-xs md:text-sm text-gray-600">11月15日-18日</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 福州 → FZ.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="FZ.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第八站</span>
+                                    <p class="text-sm md:text-base font-medium">福州</p>
+                                    <span class="text-xs md:text-sm text-gray-600">11月21日-24日</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 莆田 → PT.html -->
+                        <div class="flex-shrink-0 flex items-center justify-center px-4 py-2 rounded-md hover:bg-primary/10 transition-colors cursor-pointer w-36 md:w-40">
+                            <a href="PT.html" class="site-link">
+                                <div class="text-center">
+                                    <span class="text-xs md:text-sm text-gray-500">第九站</span>
+                                    <p class="text-sm md:text-base font-medium">莆田</p>
+                                    <span class="text-xs md:text-sm text-gray-600">11月27日-30日</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 导航交互脚本（与主页完全同步，含滑动提示控制逻辑） -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const mainNav = document.getElementById('mainNav');
+                const stickyContainer = document.getElementById('stickyContainer');
+                const slideTip = document.getElementById('slideTip');
+                const siteNav = document.getElementById('siteNav');
+                let lastScrollTop = 0;
+
+                // 滚动控制：导航栏显示/隐藏 + 阴影 + 滑动提示显示
+                window.addEventListener('scroll', function() {
+                    const currentScrollTop = window.scrollY;
+                    const isMobile = window.innerWidth < 768;
+
+                    if (!isMobile) {
+                        currentScrollTop > 100 
+                            ? stickyContainer.classList.add('shadow-md') 
+                            : stickyContainer.classList.remove('shadow-md');
+                    } else {
+                        if (currentScrollTop > lastScrollTop && currentScrollTop > 100) {
+                            mainNav.classList.add('nav-hidden');
+                            stickyContainer.classList.add('shadow-md');
+                        } else {
+                            mainNav.classList.remove('nav-hidden');
+                            currentScrollTop <= 50 && stickyContainer.classList.remove('shadow-md');
+                        }
+                    }
+
+                    toggleSlideTip();
+                    lastScrollTop = currentScrollTop < 0 ? 0 : currentScrollTop;
+                });
+
+                // 移动端导航提示显示控制（与主页逻辑一致）
+                function toggleSlideTip() {
+                    if (mainNav.classList.contains('nav-hidden')) {
+                        slideTip.classList.remove('hidden');
+                    } else {
+                        slideTip.classList.add('hidden');
+                    }
+                }
+            });
+        </script>
+
+        <!-- 内容区域：图片满版显示（保留原功能） -->
+        <section class="py-0 bg-white">
+            <div class="container mx-auto">
+                <div class="w-full">
+                    <!-- 泉州10张图片垂直满版排列 -->
+                    <img src="泉州/images/WT_01.png" alt="泉州赛事图片1" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_02.png" alt="泉州赛事图片2" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_03.png" alt="泉州赛事图片3" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_04.png" alt="泉州赛事图片4" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_05.png" alt="泉州赛事图片5" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_06.png" alt="泉州赛事图片6" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_07.png" alt="泉州赛事图片7" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_08.png" alt="泉州赛事图片8" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_09.png" alt="泉州赛事图片9" class="w-full h-auto object-cover" loading="lazy">
+                    <img src="泉州/images/WT_10.png" alt="泉州赛事图片10" class="w-full h-auto object-cover" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚（保留原样式） -->
+        <footer class="bg-dark text-white py-12 relative z-10">
+            <div class="container mx-auto px-4">
+                <div class="max-w-5xl mx-auto">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                        <div class="mb-6 md:mb-0">
+                            <h3 class="text-xl font-bold mb-2">中式台球城市精英联赛</h3>
+                            <p class="text-gray-400">球坦克LP球杆杯官方赛事</p>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="fa fa-weixin"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="fa fa-weibo"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="fa fa-qq"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-800 pt-8 text-center">
+                        <p class="mb-4">官方咨询：<a href="tel:13305052147" class="text-secondary font-medium">13305052147</a>（总决赛负责号）</p>
+                        <p class="text-gray-500 text-sm">© 2025 球坦克LP球杆杯·中式台球城市精英联赛 版权所有</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
